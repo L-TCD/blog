@@ -1,6 +1,6 @@
 <?php
 class MainController {
-	private function genererPage($data){
+	private function generatePage($data){
 		extract($data);
 		ob_start();
 		require_once($view);
@@ -8,14 +8,14 @@ class MainController {
 		require_once($template);
 	}
 
-	public function accueil(){
+	public function home(){
 		$data_page = [
 			"page_description" => "Description de la page d'accueil",
 			"page_title" => "Titre de la page d'accueil",
-			"view" => "views/accueil.view.php",
+			"view" => "views/home.view.php",
 			"template" => "views/common/template.php"
 		];
-		$this->genererPage($data_page);
+		$this->generatePage($data_page);
 	}
 	public function page1(){
 		$data_page = [
@@ -24,35 +24,35 @@ class MainController {
 			"view" => "views/page1.view.php",
 			"template" => "views/common/template.php"
 		];
-		$this->genererPage($data_page);
+		$this->generatePage($data_page);
 	}
 	public function page2(){
 		$data_page = [
 			"page_description" => "Description de la page 2",
 			"page_title" => "Titre de la page 2",
-			"view" => "views/page1.view.php",
+			"view" => "views/page2.view.php",
 			"template" => "views/common/template.php"
 		];
-		$this->genererPage($data_page);
+		$this->generatePage($data_page);
 	}
 	public function page3(){
 		$data_page = [
 			"page_description" => "Description de la page 3",
 			"page_title" => "Titre de la page 3",
-			"view" => "views/page1.view.php",
+			"view" => "views/page3.view.php",
 			"template" => "views/common/template.php"
 		];
-		$this->genererPage($data_page);
+		$this->generatePage($data_page);
 	}
-	public function pageErreur($msg){
+	public function pageError($msg){
 		$data_page = [
 			"page_description" => "Page de gestion d'erreur",
 			"page_title" => "Page d'erreur",
 			"msg" => $msg,
-			"view" => "views/erreur.view.php",
+			"view" => "views/error.view.php",
 			"template" => "views/common/template.php"
 		];
-		$this->genererPage($data_page);
+		$this->generatePage($data_page);
 	}
 
 

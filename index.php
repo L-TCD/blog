@@ -4,15 +4,14 @@ $mainController = new MainController();
 
 try{
 	if(empty($_GET['page'])){
-		$page = "accueil";
+		$page = "home";
 	} else {
 		$url = explode("/", filter_var($_GET['page'],FILTER_SANITIZE_URL));
 		$page = $url[0];
 	}
-
 	switch($page){
-		case "accueil" : 
-			$mainController->accueil();
+		case "home" : 
+			$mainController->home();
 		break;
 		case "page1" : 
 			$mainController->page1();
@@ -26,5 +25,5 @@ try{
 		default : throw new Exception("La page n'existe pas.");
 	}
 } catch (Exception $e){
-	$mainController->pageErreur($e->getMessage());
+	$mainController->pageError($e->getMessage());
 }
