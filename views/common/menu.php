@@ -6,10 +6,13 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="accueil">Accueil</a>
+          <a class="nav-link" aria-current="page" href="/accueil">Accueil</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="page1">page1</a>
+          <a class="nav-link" href="/page1">page1</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/post/<?= rand(1, 100) ?>">Article aléatoire (1 à 100)</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">

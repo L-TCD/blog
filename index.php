@@ -1,30 +1,55 @@
 <?php
+
+require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . '/controllers/CoreController.php';
+require __DIR__ . '/controllers/PostController.php';
 require_once("./controllers/MainController.controller.php");
-$mainController = new MainController();
 
-try{
-	if(empty($_GET['page'])){
-		$page = "accueil";
+try {
+
+	$router = new AltoRouter();
+
+	// Page d'accueil
+	$router->map(
+		'GET',
+		'/',
+		['controller' => 'MainController', 'method' => 'home'],
+		'main-home'
+	);
+
+
+	// Page 1
+	$router->map(
+		'GET',
+		'/page1',
+		['controller' => 'MainController', 'method' => 'page1'],
+		'main-page1'
+	);
+
+	// Page article
+	$router->map(
+		'GET',
+		'/post/[i:postId]',
+		['controller' => 'PostController', 'method' => 'show'],
+		'post-show'
+	);
+
+	$match = $router->match();
+
+	// Si l'URL saisie dans le navigateur correspond à l'une de nos routes...
+	if ($match) {
+		// alors on affiche la page demandée
+		$controller = new $match['target']['controller']; // Ex : Si url = /post/2, alors $controller = new PostController
+		$method = $match['target']['method'];  // Ex : Si url = /post/2, alors $method = show
+
+		// Ex : Si url = /post/2 ==> $controller->show($match['params']), avec $match['params'] = ['postId' => 2]
+		$params = $match['params'];
+		$controller->$method($params);
 	} else {
-		$url = explode("/", filter_var($_GET['page'],FILTER_SANITIZE_URL));
-		$page = $url[0];
+		// Sinon on affiche une page d'erreur
+		$mainController = new MainController();
+		$mainController->page404();
 	}
-
-	switch($page){
-		case "accueil" : 
-			$mainController->accueil();
-		break;
-		case "page1" : 
-			$mainController->page1();
-		break;
-		case "page2" : 
-			$mainController->page2();
-		break;
-		case "page3" : 
-			$mainController->page3();
-		break;
-		default : throw new Exception("La page n'existe pas.");
-	}
-} catch (Exception $e){
+} catch (Exception $e) {
 	$mainController->pageErreur($e->getMessage());
 }
