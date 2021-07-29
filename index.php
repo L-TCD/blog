@@ -12,8 +12,8 @@ try {
 	// Page d'accueil
 	$router->map(
 		'GET',
-		'/',
-		['controller' => 'MainController', 'method' => 'home'],
+		'/accueil',
+		['controller' => 'MainController', 'method' => 'accueil'],
 		'main-home'
 	);
 
