@@ -21,6 +21,12 @@ try {
 		['controller' => 'PostController', 'method' => 'show'],
 		'post-show'
 	);
+	$router->map(
+		'GET',
+		'/articles',
+		['controller' => 'PostController', 'method' => 'showPosts'],
+		'posts-list'
+	);
 	
 	$match = $router->match();
 

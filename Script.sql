@@ -13,8 +13,8 @@ CREATE TABLE `post` (
   `slug` VARCHAR(255) NOT NULL,
   `content` TEXT(10000) NOT NULL,
   `description` TEXT(3500) NOT NULL,
-  `publication_date` DATETIME NULL,
-  `update_date` DATETIME NULL,
+  `created_at` DATETIME NULL,
+  `update_at` DATETIME NULL,
   `user_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT FK_post_user FOREIGN KEY (user_id) REFERENCES user(id)
@@ -23,7 +23,7 @@ CREATE TABLE `post` (
 CREATE TABLE `comment` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `content` TEXT(3500) NOT NULL,
-  `datetime` DATETIME NOT NULL,
+  `created_at` DATETIME NOT NULL,
   `valid` TINYINT(1) NULL,
   `rejected` TINYINT(1) NULL,
   `user_id` INT NOT NULL,

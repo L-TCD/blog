@@ -11,6 +11,9 @@
         <li class="nav-item">
           <a class="nav-link" href="/article/<?= rand(1, 100) ?>">Article aléatoire (1 à 100)</a>
         </li>
+		<li class="nav-item">
+          <a class="nav-link" href="/articles">Liste des Articles</a>
+        </li>
 
       </ul>
     </div>
