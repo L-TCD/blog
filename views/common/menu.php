@@ -9,10 +9,12 @@
           <a class="nav-link" aria-current="page" href="/">Accueil</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/article/<?= rand(1, 100) ?>">Article aléatoire (1 à 100)</a>
+          <a class="nav-link" href="<?= $router->generate("posts-show", ["id" => 2]) ?>
+">Article aléatoire (1 à 100)</a>
         </li>
 		<li class="nav-item">
-          <a class="nav-link" href="/articles">Liste des Articles</a>
+          <a class="nav-link" href="<?= $router->generate("posts-list") ?>
+">Liste des Articles</a>
         </li>
 
       </ul>

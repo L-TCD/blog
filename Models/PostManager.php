@@ -1,5 +1,4 @@
 <?php
-require_once '../Models/CoreModel.php';
 
 class PostManager extends CoreModel
 {
@@ -7,7 +6,18 @@ class PostManager extends CoreModel
 	{
 		$query = $this->getDB()->prepare("SELECT * FROM post");
 		$query->execute();
-		$datas = $query->fetchAll(PDO::FETCH_OBJ);
+		$datas = $query->fetchAll(PDO::FETCH_CLASS, Post::class);
+		return $datas;
+	}
+
+	public function find($id)
+	{
+		$query = $this->getDB()->prepare("SELECT * FROM post WHERE id = :id");
+		$query->execute([
+			":id" => $id
+			]);
+
+		$datas = $query->fetchObject(Post::class);
 		return $datas;
 	}
 

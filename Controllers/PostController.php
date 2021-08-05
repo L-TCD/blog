@@ -1,5 +1,4 @@
 <?php
-require_once '../Models/PostManager.php';
 
 class PostController extends CoreController
 {
@@ -12,10 +11,12 @@ class PostController extends CoreController
 
 	public function show($params = [])
 	{
+		$post = $this->postManager->find($params['id']);
 		$dataPage = [
 			"params" => $params,
-			"pageDescription" => "Page d'affichage de l'Article n°" . $params['postId'],
-			"pageTitle" => "Article " . $params['postId'],
+			"pageDescription" => "Page d'affichage de l'Article n°" . $params['id'],
+			"pageTitle" => "Article " . $params['id'],
+			"post" => $post,
 			"view" => PATH_VIEW . "/post.view.php",
 			"template" => PATH_VIEW . "/common/template.php"
 		];

@@ -3,6 +3,9 @@ require_once '../vendor/autoload.php';
 require_once '../Controllers/CoreController.php';
 require_once '../Controllers/HomeController.php';
 require_once '../Controllers/PostController.php';
+require_once '../Models/CoreModel.php';
+require_once '../Models/PostManager.php';
+require_once '../Models/Post.php';
 define('PATH_VIEW', dirname(__DIR__) . '/Views');
 
 try {
@@ -17,9 +20,9 @@ try {
 	);
 	$router->map(
 		'GET',
-		'/article/[i:postId]',
+		'/articles/[i:id]',
 		['controller' => 'PostController', 'method' => 'show'],
-		'post-show'
+		'posts-show'
 	);
 	$router->map(
 		'GET',

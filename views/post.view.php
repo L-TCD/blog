@@ -1,4 +1,4 @@
 <h1>
-	Article n°<?= $params['postId'] ?>
+	Article n°<?= $params['id'] ?>
 </h1>
 

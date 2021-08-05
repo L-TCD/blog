@@ -92,5 +92,6 @@ class Post
 		$this->user_id = $user_id;
 		return $this;
 	}
+	
 
 }
