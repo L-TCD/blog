@@ -1,5 +1,8 @@
 <?php
 namespace App\Models;
+
+use DateTime;
+
 class Post
 {	
 	private $id;
@@ -7,9 +10,10 @@ class Post
 	private $slug;
 	private $content;
 	private $description;
-	private $publication_date;
-	private $update_date;
+	private $created_at;
+	private $update_at;
 	private $user_id;
+	private $username;
 
 	public function getId()
 	{
@@ -36,14 +40,14 @@ class Post
 		return $this->description;
 	}
 
-	public function getPublicationDate()
+	public function getCreatedAt() : DateTime
 	{
-		return $this->publication_date;
+		return new DateTime($this->created_at);
 	}
 
-	public function getUpdateDate()
+	public function getUpdateAt()
 	{
-		return $this->update_date;
+		return $this->update_at;
 	}
 
 	public function getUserId()
@@ -51,47 +55,9 @@ class Post
 		return $this->user_id;
 	}
 
-	private function setTitle($title)
+	public function getusername()
 	{
-		$this->title = $title;
-		return $this;
+		return $this->username;
 	}
-
-	private function setSlug($slug)
-	{
-		$this->slug = $slug;
-		return $this;
-	}
-
-	private function setContent($content)
-	{
-		$this->content = $content;
-		return $this;
-	}
-
-	private function setDescription($description)
-	{
-		$this->description = $description;
-		return $this;
-	}
-
-	private function setPublicationDate($publication_date)
-	{
-		$this->publication_date = $publication_date;
-		return $this;
-	}
-
-	private function setUpdateDate($update_date)
-	{
-		$this->update_date = $update_date;
-		return $this;
-	}
-
-	private function setUserId($user_id)
-	{
-		$this->user_id = $user_id;
-		return $this;
-	}
-	
 
 }

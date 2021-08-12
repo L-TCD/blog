@@ -8,10 +8,10 @@
         <li class="nav-item">
           <a class="nav-link" aria-current="page" href="/">Accueil</a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link" href="<?= $router->generate("posts-show", ["id" => 2]) ?>
 ">Article aléatoire (1 à 100)</a>
-        </li>
+        </li> -->
 		<li class="nav-item">
           <a class="nav-link" href="<?= $router->generate("posts-list") ?>
 ">Liste des Articles</a>

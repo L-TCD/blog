@@ -30,6 +30,6 @@ for ($i = 0; $i < 50; $i++){
 
 foreach($postsId as $postId){
 	for ($i = 0; $i < rand(0, 20); $i++){
-		$pdo->exec("INSERT INTO comment SET content='{$faker->paragraphs(rand(1,2), true)}, true)}', created_at='{$faker->date('Y-m-d')} {$faker->time('H:i:s')}', valid='1', user_id='{$faker->randomElement($usersId)}', post_id='$postId'");
+		$pdo->exec("INSERT INTO comment SET content='{$faker->paragraphs(rand(1,2), true)}', created_at='{$faker->date('Y-m-d')} {$faker->time('H:i:s')}', valid='1', user_id='{$faker->randomElement($usersId)}', post_id='$postId'");
 	}
 }
