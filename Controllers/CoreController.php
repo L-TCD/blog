@@ -1,4 +1,7 @@
 <?php
+
+namespace App\Controllers;
+
 class CoreController
 {
 	protected function generatePage($data)

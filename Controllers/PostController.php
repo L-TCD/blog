@@ -1,4 +1,7 @@
 <?php
+namespace App\Controllers;
+use App\Models\PostManager;
+use App\Controllers\CoreController;
 
 class PostController extends CoreController
 {

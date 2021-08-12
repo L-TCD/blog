@@ -2,5 +2,9 @@
     "require": {
         "altorouter/altorouter": "^2.0",
         "fakerphp/faker": "^1.15"
-    }
+    },
+
+	"autoload": {
+		"psr-4": {"App\\": "./"}
+	}
 }

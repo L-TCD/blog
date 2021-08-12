@@ -1,4 +1,9 @@
 <?php
+namespace App\Models;
+
+use \PDO;
+use App\Models\Post;
+use App\Models\CoreModel;
 
 class PostManager extends CoreModel
 {

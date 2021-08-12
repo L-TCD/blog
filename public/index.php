@@ -1,11 +1,8 @@
 <?php
 require_once '../vendor/autoload.php';
-require_once '../Controllers/CoreController.php';
-require_once '../Controllers/HomeController.php';
-require_once '../Controllers/PostController.php';
-require_once '../Models/CoreModel.php';
-require_once '../Models/PostManager.php';
-require_once '../Models/Post.php';
+
+use App\Controllers\CoreController;
+
 define('PATH_VIEW', dirname(__DIR__) . '/Views');
 
 try {
@@ -15,19 +12,19 @@ try {
 	$router->map(
 		'GET',
 		'/',
-		['controller' => 'HomeController', 'method' => 'home'],
+		['controller' => 'App\Controllers\HomeController', 'method' => 'home'],
 		'main-home'
 	);
 	$router->map(
 		'GET',
 		'/articles/[i:id]',
-		['controller' => 'PostController', 'method' => 'show'],
+		['controller' => 'App\Controllers\PostController', 'method' => 'show'],
 		'posts-show'
 	);
 	$router->map(
 		'GET',
 		'/articles',
-		['controller' => 'PostController', 'method' => 'showPosts'],
+		['controller' => 'App\Controllers\PostController', 'method' => 'showPosts'],
 		'posts-list'
 	);
 	
