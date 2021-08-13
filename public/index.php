@@ -18,14 +18,52 @@ try {
 	$router->map(
 		'GET',
 		'/articles/[i:id]',
-		['controller' => 'App\Controllers\PostController', 'method' => 'show'],
-		'posts-show'
+		['controller' => 'App\Controllers\PostController', 'method' => 'showPost'],
+		'show-post'
 	);
 	$router->map(
 		'GET',
 		'/articles',
-		['controller' => 'App\Controllers\PostController', 'method' => 'showPosts'],
-		'posts-list'
+		['controller' => 'App\Controllers\PostController', 'method' => 'showPostList'],
+		'show-post-list'
+	);
+	
+	//Admin
+	$router->map(
+		'GET',
+		'/admin/articles',
+		['controller' => 'App\Controllers\PostController', 'method' => 'adminShowPostList'],
+		'admin-show-post-list'
+	);
+	$router->map(
+		'GET|POST',
+		'/admin/articles/[i:id]',
+		['controller' => 'App\Controllers\PostController', 'method' => 'adminShowPost'],
+		'admin-show-post'
+	);
+	$router->map(
+		'POST',
+		'/admin/articles/edition',
+		['controller' => 'App\Controllers\PostController', 'method' => 'updatePost'],
+		'admin-update-post'
+	);
+	$router->map(
+		'POST',
+		'/admin/articles/suppression',
+		['controller' => 'App\Controllers\PostController', 'method' => 'deletePost'],
+		'admin-delete-post'
+	);
+	$router->map(
+		'POST',
+		'/admin/articles/formulaireAjout',
+		['controller' => 'App\Controllers\PostController', 'method' => 'adminAddPost'],
+		'admin-add-post-form'
+	);
+	$router->map(
+		'POST',
+		'/admin/articles/ajout',
+		['controller' => 'App\Controllers\PostController', 'method' => 'addPost'],
+		'admin-add-post'
 	);
 	
 	$match = $router->match();

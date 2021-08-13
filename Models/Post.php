@@ -45,9 +45,9 @@ class Post
 		return new DateTime($this->created_at);
 	}
 
-	public function getUpdateAt()
+	public function getUpdateAt() : DateTime
 	{
-		return $this->update_at;
+		return new DateTime($this->update_at);
 	}
 
 	public function getUserId()
