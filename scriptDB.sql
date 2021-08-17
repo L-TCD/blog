@@ -13,11 +13,10 @@ CREATE TABLE `post` (
   `slug` VARCHAR(255) NOT NULL,
   `content` TEXT(10000) NOT NULL,
   `description` TEXT(3500) NOT NULL,
-  `created_at` DATETIME NULL,
+  `created_at` DATETIME NOT NULL,
   `update_at` DATETIME NULL,
-  `user_id` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT FK_post_user FOREIGN KEY (user_id) REFERENCES user(id)
+  `author` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `comment` (

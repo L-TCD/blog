@@ -1,11 +1,12 @@
 <?php
+
 namespace App\Controllers;
 
 use App\Controllers\CoreController;
 use App\Models\CommentManager;
 use App\Models\PostManager;
 
-class PostController extends CoreController
+final class PostController extends CoreController
 {
 	private $postManager;
 	private $commentManager;
@@ -16,10 +17,23 @@ class PostController extends CoreController
 		$this->commentManager = new CommentManager();
 	}
 
-	public function showPost($params = [])
+	public function showAll()
+	{
+		$posts = $this->postManager->findAll("id DESC");
+		$dataPage = [
+			"pageDescription" => "Page d'affichage de la liste des Articles",
+			"pageTitle" => "Liste des Articles",
+			"posts" => $posts,
+			"view" => PATH_VIEW . "/posts.view.php",
+			"template" => PATH_VIEW . "/common/template.php"
+		];
+		$this->generatePage($dataPage);
+	}
+
+	public function show($params = [])
 	{
 		$post = $this->postManager->find($params['id']);
-		$comments = $this->commentManager->findAllByPostId($params['id']);
+		$comments = $this->commentManager->findByPostId($params['id']);
 		$dataPage = [
 			"params" => $params,
 			"pageDescription" => "Page d'affichage de l'Article n°" . $params['id'],
@@ -32,22 +46,9 @@ class PostController extends CoreController
 		$this->generatePage($dataPage);
 	}
 
-	public function showPostList()
+	public function adminShowAll()
 	{
-		$posts = $this->postManager->findAll();
-		$dataPage = [
-			"pageDescription" => "Page d'affichage de la liste des Articles",
-			"pageTitle" => "Liste des Articles",
-			"posts" => $posts,
-			"view" => PATH_VIEW . "/posts.view.php",
-			"template" => PATH_VIEW . "/common/template.php"
-		];
-		$this->generatePage($dataPage);
-	}
-
-	public function adminShowPostList()
-	{
-		$posts = $this->postManager->findAll();
+		$posts = $this->postManager->findAll("id DESC");
 		$dataPage = [
 			"pageDescription" => "Page d'affichage de la liste des Articles",
 			"pageTitle" => "Liste des Articles",
@@ -58,7 +59,7 @@ class PostController extends CoreController
 		$this->generatePage($dataPage);
 	}
 
-	public function adminShowPost($params = [])
+	public function updateForm($params = [])
 	{
 		$post = $this->postManager->find($params['id']);
 		$dataPage = [
@@ -72,21 +73,21 @@ class PostController extends CoreController
 		$this->generatePage($dataPage);
 	}
 
-	public function updatePost()
+	public function update()
 	{
-		$this->postManager->updatePost($_POST['title'], $_POST['slug'], $_POST['content'], $_POST['description'], (int)$_POST['id']);
+		$this->postManager->update($_POST['title'], $_POST['slug'], $_POST['content'], $_POST['description'], $_POST['author'], (int)$_POST['id']);
 		// alerte success
 		header('location: /admin/articles');
 	}
 
-	public function deletePost()
+	public function delete()
 	{
-		$this->postManager->deletePost((int)$_POST['id']);
+		$this->postManager->delete((int)$_POST['id']);
 		// alerte success
 		header('location: /admin/articles');
 	}
 
-	public function adminAddPost()
+	public function insertForm()
 	{
 		$dataPage = [
 			"pageDescription" => "Page d'ajout d'un article",
@@ -97,9 +98,9 @@ class PostController extends CoreController
 		$this->generatePage($dataPage);
 	}
 
-	public function addPost()
+	public function insert()
 	{
-		$this->postManager->addPost($_POST['title'], $_POST['slug'], $_POST['content'], $_POST['description']);
+		$this->postManager->insert($_POST['title'], $_POST['slug'], $_POST['content'], $_POST['description'], $_POST['author']);
 		// alerte success
 		header('location: /admin/articles');
 	}

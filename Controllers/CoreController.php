@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-class CoreController
+abstract class CoreController
 {
 	protected function generatePage($data)
 	{

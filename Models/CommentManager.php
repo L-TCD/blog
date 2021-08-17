@@ -1,13 +1,17 @@
 <?php
+
 namespace App\Models;
 
 use \PDO;
 use App\Models\Comment;
 use App\Models\CoreModel;
 
-class CommentManager extends CoreModel
+final class CommentManager extends CoreModel
 {
-	public function findAllByPostId($id)
+	protected $table = 'comment';
+	protected $className = Comment::class;
+
+	public function findByPostId($id)
 	{
 		$query = $this->getDB()->prepare("SELECT
 			c.id AS id,
@@ -28,15 +32,5 @@ class CommentManager extends CoreModel
 		return $datas;
 	}
 
-	public function find($id)
-	{
-		$query = $this->getDB()->prepare("SELECT * FROM comment WHERE id = :id");
-		$query->execute([
-			":id" => $id
-		]);
-
-		$datas = $query->fetchObject(Comment::class);
-		return $datas;
-	}
 
 }

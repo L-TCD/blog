@@ -1,41 +1,41 @@
 <?php
+
 namespace App\Models;
 
 use DateTime;
 
-class Post
+final class Post
 {	
-	private $id;
-	private $title;
-	private $slug;
-	private $content;
-	private $description;
-	private $created_at;
-	private $update_at;
-	private $user_id;
-	private $username;
+	private int $id;
+	private string $title;
+	private string $slug;
+	private string $content;
+	private string $description;
+	private string $created_at;
+	private ?string $update_at;
+	private string $author;
 
-	public function getId()
+	public function getId() : int
 	{
 		return $this->id;
 	}
 
-	public function getTitle()
+	public function getTitle() : string
 	{
 		return $this->title;
 	}
 
-	public function getSlug()
+	public function getSlug() : string
 	{
 		return $this->slug;
 	}
 
-	public function getContent()
+	public function getContent() : string
 	{
 		return $this->content;
 	}
 
-	public function getDescription()
+	public function getDescription() : string
 	{
 		return $this->description;
 	}
@@ -50,14 +50,9 @@ class Post
 		return new DateTime($this->update_at);
 	}
 
-	public function getUserId()
+	public function getAuthor() : string
 	{
-		return $this->user_id;
-	}
-
-	public function getusername()
-	{
-		return $this->username;
+		return $this->author;
 	}
 
 }

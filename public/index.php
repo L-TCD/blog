@@ -1,7 +1,7 @@
 <?php
 require_once '../vendor/autoload.php';
 
-use App\Controllers\CoreController;
+use App\Controllers\HomeController;
 
 define('PATH_VIEW', dirname(__DIR__) . '/Views');
 
@@ -18,13 +18,13 @@ try {
 	$router->map(
 		'GET',
 		'/articles/[i:id]',
-		['controller' => 'App\Controllers\PostController', 'method' => 'showPost'],
+		['controller' => 'App\Controllers\PostController', 'method' => 'show'],
 		'show-post'
 	);
 	$router->map(
 		'GET',
 		'/articles',
-		['controller' => 'App\Controllers\PostController', 'method' => 'showPostList'],
+		['controller' => 'App\Controllers\PostController', 'method' => 'showAll'],
 		'show-post-list'
 	);
 	
@@ -32,37 +32,37 @@ try {
 	$router->map(
 		'GET',
 		'/admin/articles',
-		['controller' => 'App\Controllers\PostController', 'method' => 'adminShowPostList'],
+		['controller' => 'App\Controllers\PostController', 'method' => 'adminShowAll'],
 		'admin-show-post-list'
 	);
 	$router->map(
 		'GET|POST',
 		'/admin/articles/[i:id]',
-		['controller' => 'App\Controllers\PostController', 'method' => 'adminShowPost'],
+		['controller' => 'App\Controllers\PostController', 'method' => 'updateForm'],
 		'admin-show-post'
 	);
 	$router->map(
 		'POST',
 		'/admin/articles/edition',
-		['controller' => 'App\Controllers\PostController', 'method' => 'updatePost'],
+		['controller' => 'App\Controllers\PostController', 'method' => 'update'],
 		'admin-update-post'
 	);
 	$router->map(
 		'POST',
 		'/admin/articles/suppression',
-		['controller' => 'App\Controllers\PostController', 'method' => 'deletePost'],
+		['controller' => 'App\Controllers\PostController', 'method' => 'delete'],
 		'admin-delete-post'
 	);
 	$router->map(
 		'POST',
 		'/admin/articles/formulaireAjout',
-		['controller' => 'App\Controllers\PostController', 'method' => 'adminAddPost'],
+		['controller' => 'App\Controllers\PostController', 'method' => 'insertForm'],
 		'admin-add-post-form'
 	);
 	$router->map(
 		'POST',
 		'/admin/articles/ajout',
-		['controller' => 'App\Controllers\PostController', 'method' => 'addPost'],
+		['controller' => 'App\Controllers\PostController', 'method' => 'insert'],
 		'admin-add-post'
 	);
 	
@@ -74,10 +74,10 @@ try {
 		$params = $match['params'];
 		$controller->$method($params);
 	} else {
-		$controller = new CoreController();
+		$controller = new HomeController();
 		$controller->pageError("La page n'existe pas ! (404)");
 	}
 } catch (Exception $e) {
-	$controller = new CoreController();
+	$controller = new HomeController();
 	$controller->pageError($e->getMessage());
 }

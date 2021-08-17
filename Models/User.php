@@ -1,36 +1,37 @@
 <?php
-namespace App\Models;
-class User
-{	
-	private $id;
-	private $email;
-	private $username;
-	private $password;
-	private $admin;
 
-	public function getId()
+namespace App\Models;
+
+final class User
+{	
+	private int $id;
+	private string $email;
+	private string $username;
+	private string $password;
+	private ?bool $admin;
+
+	public function getId() : int
 	{
 		return $this->id;
 	}
 
-	public function getEmail()
+	public function getEmail() : string
 	{
 		return $this->email;
 	}
 
-	public function getUsername()
+	public function getUsername() : string
 	{
 		return $this->username;
 	}
 
-	public function getPassword()
+	public function getPassword() : string
 	{
 		return $this->password;
 	}
 
-	public function getAdmin()
+	public function getAdmin() : ?bool
 	{
 		return $this->admin;
 	}
-
 }
