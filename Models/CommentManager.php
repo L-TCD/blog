@@ -32,5 +32,17 @@ final class CommentManager extends CoreModel
 		return $datas;
 	}
 
+	public function insert(string $content, int $post_id)
+	{
+		$query = $this->getDB()->prepare("INSERT INTO comment SET 
+			content = :content,
+			created_at = NOW(),
+			user_id = 1,
+			post_id = :post_id"
+		);
+		$query->bindValue(":content",$content,PDO::PARAM_STR);
+		$query->bindValue(":post_id",$post_id,PDO::PARAM_INT);
+		$query->execute();
+	}
 
 }

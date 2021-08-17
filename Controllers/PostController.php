@@ -76,14 +76,14 @@ final class PostController extends CoreController
 	public function update()
 	{
 		$this->postManager->update($_POST['title'], $_POST['slug'], $_POST['content'], $_POST['description'], $_POST['author'], (int)$_POST['id']);
-		// alerte success
+		// alert success
 		header('location: /admin/articles');
 	}
 
 	public function delete()
 	{
 		$this->postManager->delete((int)$_POST['id']);
-		// alerte success
+		// alert success
 		header('location: /admin/articles');
 	}
 
@@ -101,7 +101,7 @@ final class PostController extends CoreController
 	public function insert()
 	{
 		$this->postManager->insert($_POST['title'], $_POST['slug'], $_POST['content'], $_POST['description'], $_POST['author']);
-		// alerte success
+		// alert success
 		header('location: /admin/articles');
 	}
 }

@@ -22,6 +22,18 @@ try {
 		'show-post'
 	);
 	$router->map(
+		'POST',
+		'/articles/comment',
+		['controller' => 'App\Controllers\CommentController', 'method' => 'insert'],
+		'insert-comment'
+	);
+	$router->map(
+		'POST',
+		'/comment/delete',
+		['controller' => 'App\Controllers\CommentController', 'method' => 'delete'],
+		'delete-comment'
+	);
+	$router->map(
 		'GET',
 		'/articles',
 		['controller' => 'App\Controllers\PostController', 'method' => 'showAll'],
