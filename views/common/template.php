@@ -10,6 +10,17 @@
 </head>
 <body>
     <?php require_once(PATH_VIEW . "/common/menu.php"); ?>
+
+	<?php if(!empty($_SESSION['alert'])) : ?>
+		<div class="alert <?= $_SESSION['alert']['type'] ?>" role="alert">
+			<?= $_SESSION['alert']['text'] ?>
+		</div>
+	<?php 
+		unset($_SESSION['alert']);
+		endif; 
+	?>
+
+
 	<div class="container-fluid">
     	<?= $pageContent; ?>
 	</div>

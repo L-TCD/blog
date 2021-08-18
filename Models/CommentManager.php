@@ -64,9 +64,17 @@ final class CommentManager extends CoreModel
 	public function update(string $content,int $id)
 	{
 		$query = $this->getDB()->prepare("UPDATE {$this->table} SET content = :content  WHERE id = :id");
-	$query->bindValue(":content",$content,PDO::PARAM_STR);
-	$query->bindValue(":id",$id,PDO::PARAM_INT);
-	$query->execute();
+		$query->bindValue(":content",$content,PDO::PARAM_STR);
+		$query->bindValue(":id",$id,PDO::PARAM_INT);
+		$query->execute();
+	}
+
+	public function findAllPostIdWithCommentNull()
+	{
+		$query = $this->getDB()->prepare("SELECT post_id FROM `comment` WHERE valid IS NULL GROUP BY post_id;");
+		$query->execute();
+		$datas = $query->fetchAll(PDO::FETCH_ASSOC);
+		return $datas;
 	}
 
 }

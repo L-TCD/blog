@@ -14,6 +14,7 @@ final class Post
 	private string $created_at;
 	private ?string $update_at;
 	private string $author;
+	private bool $commentToValid = false;
 
 	public function getId() : int
 	{
@@ -53,6 +54,16 @@ final class Post
 	public function getAuthor() : string
 	{
 		return $this->author;
+	}
+
+	public function getCommentToValid() : bool
+	{
+		return $this->commentToValid;
+	}
+
+	public function setCommentToValid(bool $bool) : void
+	{
+		$this->commentToValid = $bool;
 	}
 
 }

@@ -20,12 +20,20 @@ final class CommentController extends CoreController
 	public function insert()
 	{
 		$this->commentManager->insert((string)$_POST['content'], (int)$_POST['post_id']);
+		$_SESSION['alert'] = [
+			"type" => "alert-success",
+			"text" => "Enregistrement du commentaire effectué."
+		];
 		header('location: /articles/'.(int)$_POST['post_id']);
 	}
 	
 	public function delete()
 	{
 		$this->commentManager->delete((int)$_POST['id']);
+		$_SESSION['alert'] = [
+			"type" => "alert-success",
+			"text" => "Suppression du commentaire effectuée."
+		];
 		header('location: /articles/'.(int)$_POST['post_id']);
 	}
 	
@@ -53,7 +61,7 @@ final class CommentController extends CoreController
 			"pageTitle" => "Article " . $post_id,
 			"post" => $post,
 			"comments" => $comments,
-			"commentToUpdateId" => $commentToUpdateId, //nouveau
+			"commentToUpdateId" => $commentToUpdateId,
 			"view" => PATH_VIEW . "/post.view.php",
 			"template" => PATH_VIEW . "/common/template.php"
 		];
@@ -64,6 +72,10 @@ final class CommentController extends CoreController
 	public function update()
 	{
 		$this->commentManager->update((string)$_POST['content'], (int)$_POST['id']);
+		$_SESSION['alert'] = [
+			"type" => "alert-success",
+			"text" => "Modification du commentaire effectuée."
+		];
 		header('location: /articles/'.(int)$_POST['post_id']);
 	}
 

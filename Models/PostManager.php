@@ -29,7 +29,6 @@ final class PostManager extends CoreModel
 		$query->bindValue(":author",$author,PDO::PARAM_STR);
 		$query->bindValue(":id",$id,PDO::PARAM_INT);
 		$query->execute();
-		//confirm
 	}
 
 	public function insert(String $title, String $slug, String $content, String $description, String $author)
@@ -48,7 +47,6 @@ final class PostManager extends CoreModel
 		$query->bindValue(":description",$description,PDO::PARAM_STR);
 		$query->bindValue(":author",$author,PDO::PARAM_STR);
 		$query->execute();
-		//confirm
 	}
 
 }
