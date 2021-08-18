@@ -51,6 +51,5 @@ abstract class CoreModel
 		$query->execute([
 			":id" => $id
 		]);
-		//confirm
 	}
 }

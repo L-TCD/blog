@@ -34,7 +34,7 @@ final class CommentManager extends CoreModel
 
 	public function insert(string $content, int $post_id)
 	{
-		$query = $this->getDB()->prepare("INSERT INTO comment SET 
+		$query = $this->getDB()->prepare("INSERT INTO {$this->table} SET 
 			content = :content,
 			created_at = NOW(),
 			user_id = 1,
@@ -43,6 +43,30 @@ final class CommentManager extends CoreModel
 		$query->bindValue(":content",$content,PDO::PARAM_STR);
 		$query->bindValue(":post_id",$post_id,PDO::PARAM_INT);
 		$query->execute();
+	}
+
+	public function hide(int $id)
+	{
+		$query = $this->getDB()->prepare("UPDATE {$this->table} SET valid = 0  WHERE id = :id");
+		$query->execute([
+			":id" => $id
+		]);
+	}
+
+	public function show(int $id)
+	{
+		$query = $this->getDB()->prepare("UPDATE {$this->table} SET valid = 1  WHERE id = :id");
+		$query->execute([
+			":id" => $id
+		]);
+	}
+
+	public function update(string $content,int $id)
+	{
+		$query = $this->getDB()->prepare("UPDATE {$this->table} SET content = :content  WHERE id = :id");
+	$query->bindValue(":content",$content,PDO::PARAM_STR);
+	$query->bindValue(":id",$id,PDO::PARAM_INT);
+	$query->execute();
 	}
 
 }

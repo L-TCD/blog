@@ -17,6 +17,13 @@ try {
 	);
 	$router->map(
 		'GET',
+		'/articles',
+		['controller' => 'App\Controllers\PostController', 'method' => 'showAll'],
+		'show-post-list'
+	);
+
+	$router->map(
+		'GET|POST',
 		'/articles/[i:id]',
 		['controller' => 'App\Controllers\PostController', 'method' => 'show'],
 		'show-post'
@@ -34,11 +41,30 @@ try {
 		'delete-comment'
 	);
 	$router->map(
-		'GET',
-		'/articles',
-		['controller' => 'App\Controllers\PostController', 'method' => 'showAll'],
-		'show-post-list'
+		'POST',
+		'/comment/hide',
+		['controller' => 'App\Controllers\CommentController', 'method' => 'hide'],
+		'hide-comment'
 	);
+	$router->map(
+		'POST',
+		'/comment/show',
+		['controller' => 'App\Controllers\CommentController', 'method' => 'show'],
+		'show-comment'
+	);
+	$router->map(
+		'POST',
+		'/comment/updateForm',
+		['controller' => 'App\Controllers\CommentController', 'method' => 'updateForm'],
+		'updateForm-comment'
+	);
+	$router->map(
+		'POST',
+		'/comment/update',
+		['controller' => 'App\Controllers\CommentController', 'method' => 'update'],
+		'update-comment'
+	);
+	
 	
 	//Admin
 	$router->map(

@@ -40,6 +40,7 @@ final class PostController extends CoreController
 			"pageTitle" => "Article " . $params['id'],
 			"post" => $post,
 			"comments" => $comments,
+			"commentToUpdateId" => null,
 			"view" => PATH_VIEW . "/post.view.php",
 			"template" => PATH_VIEW . "/common/template.php"
 		];
