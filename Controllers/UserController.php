@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\UserManager;
 use App\Controllers\CoreController;
+use App\Models\User;
 
 final class UserController extends CoreController
 {
@@ -81,7 +82,7 @@ final class UserController extends CoreController
 
 	public function insert()
 	{
-		echo "registration";
+		// $this->userManager->insert();
 	}
 
 	public function logInForm()
@@ -97,6 +98,33 @@ final class UserController extends CoreController
 
 	public function logIn()
 	{
-		echo "connexion";
+		if(!empty($_POST['username']) && !empty($_POST['password'])){
+			$user = $this->userManager->findByUsername((string)$_POST['username']);
+			if($user === false) {
+				$_SESSION['alert'] = [
+					"type" => "alert-danger",
+					"text" => "Identifiant ou mot de passe incorrect."
+				];
+				header('location: /connexion');
+			}
+
+			if(password_verify((string)$_POST['password'],$user->getPassword())){
+				$_SESSION['auth'] = $user->getId();
+				$_SESSION['alert'] = [
+					"type" => "alert-success",
+					"text" => "Connexion effectuée."
+				];
+				header('location: /');
+			} else {
+				$_SESSION['alert'] = [
+					"type" => "alert-danger",
+					"text" => "Identifiant ou mot de passe incorrect."
+				];
+				header('location: /connexion');
+			}
+
+
+		}
+
 	}
 }

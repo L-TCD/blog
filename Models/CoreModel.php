@@ -45,7 +45,7 @@ abstract class CoreModel
 		return $item;
 	}
 
-		public function delete(int $id)
+	public function delete(int $id)
 	{
 		$query = $this->getDB()->prepare("DELETE FROM {$this->table} WHERE id = :id");
 		$query->execute([

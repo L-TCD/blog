@@ -1,7 +1,8 @@
 {
     "require": {
         "altorouter/altorouter": "^2.0",
-        "fakerphp/faker": "^1.15"
+        "fakerphp/faker": "^1.15",
+        "symfony/var-dumper": "^5.3"
     },
 
 	"autoload": {

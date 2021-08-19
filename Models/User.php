@@ -9,6 +9,7 @@ final class User
 	private string $username;
 	private string $password;
 	private bool $admin;
+	
 
 	public function getId() : int
 	{

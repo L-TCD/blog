@@ -29,7 +29,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '900077af3e9e6b97a0540417f70aee0f3d5ff5c5',
+    'reference' => '60b8dadcdb55261eac5ee0aa8cdcba54dbb3d6a0',
     'name' => '__root__',
   ),
   'versions' => 
@@ -41,7 +41,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '900077af3e9e6b97a0540417f70aee0f3d5ff5c5',
+      'reference' => '60b8dadcdb55261eac5ee0aa8cdcba54dbb3d6a0',
     ),
     'altorouter/altorouter' => 
     array (
@@ -78,6 +78,33 @@ private static $installed = array (
       array (
       ),
       'reference' => '5f38c8804a9e97d23e0c8d63341088cd8a22d627',
+    ),
+    'symfony/polyfill-mbstring' => 
+    array (
+      'pretty_version' => 'v1.23.1',
+      'version' => '1.23.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '9174a3d80210dca8daa7f31fec659150bbeabfc6',
+    ),
+    'symfony/polyfill-php80' => 
+    array (
+      'pretty_version' => 'v1.23.1',
+      'version' => '1.23.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '1100343ed1a92e3a38f9ae122fc0eb21602547be',
+    ),
+    'symfony/var-dumper' => 
+    array (
+      'pretty_version' => 'v5.3.6',
+      'version' => '5.3.6.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '3dd8ddd1e260e58ecc61bb78da3b6584b3bfcba0',
     ),
   ),
 );

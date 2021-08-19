@@ -4,6 +4,10 @@ CREATE TABLE `user` (
   `username` VARCHAR(255) NOT NULL,
   `password` VARCHAR(255) NOT NULL,
   `admin` TINYINT(1) NULL,
+  `active` TINYINT(1) NULL,
+  `token` VARCHAR(255) NULL,
+  `token_date` DATETIME NULL,
+
   PRIMARY KEY (`id`)
 );
 
@@ -24,7 +28,6 @@ CREATE TABLE `comment` (
   `content` TEXT(3500) NOT NULL,
   `created_at` DATETIME NOT NULL,
   `valid` TINYINT(1) NULL,
-  `rejected` TINYINT(1) NULL,
   `user_id` INT NOT NULL,
   `post_id` INT NOT NULL,
   PRIMARY KEY (`id`),

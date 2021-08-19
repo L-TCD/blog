@@ -26,4 +26,13 @@ final class UserManager extends CoreModel
 	
 	}
 
+	public function findByUsername(string $username)
+	{
+		$query = $this->getDB()->prepare("SELECT * FROM user WHERE username = :username");
+		$query->bindValue(":username", $username, PDO::PARAM_STR);
+		$query->execute();
+		$user = $query->fetchObject($this->className);
+		return $user;
+	}
+
 }
