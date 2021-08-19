@@ -8,7 +8,7 @@ final class User
 	private string $email;
 	private string $username;
 	private string $password;
-	private ?bool $admin;
+	private bool $admin;
 
 	public function getId() : int
 	{
@@ -33,5 +33,25 @@ final class User
 	public function getAdmin() : ?bool
 	{
 		return $this->admin;
+	}
+
+	public function setEmail()
+	{
+		//
+	}
+
+	public function setUsername()
+	{
+		//
+	}
+
+	public function setPassword()
+	{
+		//
+	}
+
+	public function setAdmin(bool $bool)
+	{
+		//
 	}
 }

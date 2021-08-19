@@ -1,6 +1,6 @@
 <h1><?= htmlentities($post->getTitle()) ?></h1>
 <hr>
-<p class="text-muted">Publié le <?= $post->getCreatedAt()->format('d/m/Y') ?> par <?= $post->getAuthor() ?></p>
+<p class="text-muted">Publié le <?= $post->getCreatedAt()->format('d/m/Y') ?> par <?= htmlentities($post->getAuthor()) ?></p>
 <p><?= nl2br(htmlentities($post->getContent())) ?></p>
 <br>
 
@@ -10,7 +10,7 @@
 <?php foreach($comments as $comment): ?>
 	<div class="mb-5">
 		<div class="text-muted mb-2">
-			Le <?= $comment->getCreatedAt()->format('d/m/Y à H:i:s') ?> par <?= $comment->getUsername() ?> :
+			Le <?= $comment->getCreatedAt()->format('d/m/Y à H:i:s') ?> par <?= htmlentities($comment->getUsername()) ?> :
 
 			<form action="/comment/show" method="POST" style="display:inline">
 				<input type="hidden" name="post_id" value="<?= $post->getId() ?>">
@@ -48,14 +48,14 @@
 				<form action="/comment/update" method="POST">
 					<div class="form-group">
 						<label for="content" class="form-label">Message à modifier:</label>
-						<textarea name="content" id="content" class="form-control" cols="auto" rows="auto"><?= $comment->getContent() ?></textarea>
+						<textarea name="content" id="content" class="form-control" cols="auto" rows="auto"><?= nl2br(htmlentities($comment->getContent())) ?></textarea>
 					</div>
 					<input type="hidden" name="id" value="<?= $comment->getId() ?>">
 					<input type="hidden" name="post_id" value="<?= $post->getId() ?>">
 					<button type="submit" class="btn btn-warning my-3">Enregistrer</button>
 				</form>
 			<?php else : ?>
-			<?= $comment->getContent() ?></p>
+			<?= nl2br(htmlentities($comment->getContent())) ?></p>
 			<?php endif ?>
 		</div>
 	</div>
