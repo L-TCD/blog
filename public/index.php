@@ -4,7 +4,7 @@ require_once '../vendor/autoload.php';
 
 use App\Controllers\HomeController;
 
-define('PATH_VIEW', dirname(__DIR__) . '/Views');
+define('PATH_VIEW', dirname(__DIR__) . '/views');
 
 try {
 
@@ -96,8 +96,8 @@ try {
 		['controller' => 'App\Controllers\UserController', 'method' => 'confirm'],
 		'user-confirm'
 	);
-	
-	
+
+
 	//FOR ADMIN
 	$router->map(
 		'GET',
