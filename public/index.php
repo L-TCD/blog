@@ -92,7 +92,7 @@ try {
 	);
 	$router->map(
 		'GET',
-		'/confirm/[i:userId]/[a:token]',
+		'/confirm/[i:userId]/[**:token]',
 		['controller' => 'App\Controllers\UserController', 'method' => 'confirm'],
 		'user-confirm'
 	);

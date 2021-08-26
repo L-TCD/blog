@@ -126,7 +126,6 @@ final class UserController extends CoreController
 
 	public function insert()
 	{	
-		
 		$email = (string)$_POST['email'];
 		$userWanted2 = $this->userManager->findByEmail($email);
 		if($userWanted2 && $email === $userWanted2->getEmail()){
@@ -156,21 +155,28 @@ final class UserController extends CoreController
 		if(!empty($_SESSION['alert'])){
 			$this->redirect('user-insert-form');
 		} else {
-			// $token = password_hash($username, PASSWORD_BCRYPT);
-			$token = $username;
-			$userId = $this->userManager->insert($email, $username, $password, $token);
+			$token = (string)($username.time());
+			$tokenCrypt = crypt($token, 'rl');
+			
+			$userId = $this->userManager->insert($email, $username, $password, $tokenCrypt);
 			$subject = 'Lien de validation';
 			$from = 'teamcookiedevelopment@gmail.com';
-			$headers='MIME-Version: 1.0\n';
-			$headers .= 'Content-type: text/html; charset=utf-8\n';
-			$headers .= 'From: '.$from.'\n'.
-				'Reply-To: '.$from.'\n';
-			//compléter message	
-			$message = '<html><head><title>Lien de validation</title></head><body>';
-			$message .= '<h1>Bienvenue !</h1>';
-			$message .= '<p>Pour valider votre inscription sur le blog, <a href="http://localhost:8000/confirm/'.$userId.'/'.$token.'">Cliquez ici</a>.</p>';
-			$message .= '<p> A très vite !</p>';
-			$message .= '</body></html>';
+
+			$message = '<h1>Bienvenue !</h1>';
+			$message .= '<p>Pour valider votre inscription sur le blog, <a href="http://localhost:8000/confirm/'.$userId.'/'.$tokenCrypt.'">Cliquez ici</a>.</p>';
+			$message .= '<p> A très vite !</p><br>';
+			$message .= 'http://localhost:8000/confirm/'.$userId.'/'.$tokenCrypt.'<br>';
+			$message .= 'token : '.$token.'<br>';
+			$message .= 'tokenCrypt : '.$tokenCrypt;
+
+
+
+			// $message .= '</body></html>';
+
+			$headers = "MIME-Version: 1.0" . "\r\n";
+			$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+			$headers .= 'From: '. $from . "\r\n";
+
 
 
 			if(mail($email, $subject, $message, $headers)){
@@ -191,24 +197,26 @@ final class UserController extends CoreController
 	public function confirm($params = [])
 	{	
 		$userId = (int)$params['userId'];
-		$token = (string)$params['token'];
+		$tokenCrypt = $params['token'];
 		$user = $this->userManager->find($userId);
+		if($user !== false) {
+			$token = $user->getToken();
+		}
+
 		if($user === false){
 			Alert::addAlert(Alert::RED, 'Utilisateur inconnu.');
-			$this->redirect("user-insert-form");
 		} elseif($user->getActive() === true){
 			Alert::addAlert(Alert::RED, 'Compte utilisateur déjà validé');
-			$this->redirect("log-in");
-		} elseif($token === $user->getToken()){ // password_verify($token,$user->getToken())
+		} elseif($token == $tokenCrypt){ 
 				$this->userManager->setActive(true, $userId);
 				$_SESSION['auth'] = $userId;
 				Alert::addAlert(Alert::GREEN, 'Validation compte utilisateur effectuée');
-				$this->redirect("main-home");
 		} else {
 			Alert::addAlert(Alert::RED, 'Lien de validation incorrect');
-			$this->redirect("main-home");
+			dump($token);
+			dump($tokenCrypt);
 		}
-		
+		$this->redirect("main-home");
 	}
 
 
