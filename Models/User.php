@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use DateTime;
+
 final class User
 {	
 	private int $id;
@@ -9,6 +11,9 @@ final class User
 	private string $username;
 	private string $password;
 	private bool $admin;
+	private bool $active;
+	private ?string $token;
+	private ?string $token_date;
 	
 
 	public function getId() : int
@@ -31,9 +36,27 @@ final class User
 		return $this->password;
 	}
 
-	public function getAdmin() : ?bool
+	public function getAdmin() : bool
 	{
 		return $this->admin;
+	}
+
+	public function getActive() : bool
+	{
+		return $this->active;
+	}
+
+	public function getToken() : ?string
+	{
+		return $this->token;
+	}
+
+	public function getTokenDate() : ?DateTime
+	{
+		if(!empty($token_date)){
+			return new DateTime($this->token_date);
+		}
+		return null;
 	}
 
 	public function setEmail()
@@ -52,6 +75,21 @@ final class User
 	}
 
 	public function setAdmin(bool $bool)
+	{
+		//
+	}
+
+	public function setActive(bool $bool)
+	{
+		//
+	}
+
+	public function setToken()
+	{
+		//
+	}
+
+	public function setTokenDate()
 	{
 		//
 	}

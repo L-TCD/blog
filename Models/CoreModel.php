@@ -10,7 +10,7 @@ abstract class CoreModel
 	protected $table;
 	protected $className;
 
-	private static function setDB()
+	protected static function setDB()
 	{
 		self::$pdo = new PDO("mysql:host=localhost;dbname=blog;charset=utf8","root","root", [
 			PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
@@ -37,7 +37,7 @@ abstract class CoreModel
 
 	public function find(int $id)
 	{
-		$query = $this->getDB()->prepare("SELECT * FROM post WHERE id = :id");
+		$query = $this->getDB()->prepare("SELECT * FROM {$this->table} WHERE id = :id");
 		$query->execute([
 			":id" => $id
 		]);

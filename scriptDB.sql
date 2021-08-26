@@ -3,8 +3,8 @@ CREATE TABLE `user` (
   `email` VARCHAR(255) NOT NULL,
   `username` VARCHAR(255) NOT NULL,
   `password` VARCHAR(255) NOT NULL,
-  `admin` TINYINT(1) NULL,
-  `active` TINYINT(1) NULL,
+  `admin` TINYINT(1) NOT NULL,
+  `active` TINYINT(1) NOT NULL,
   `token` VARCHAR(255) NULL,
   `token_date` DATETIME NULL,
 

@@ -7,6 +7,7 @@
 			<th scope="col">Nom</th>
 			<th scope="col">Email</th>
 			<th scope="col">Administrateur</th>
+			<th scope="col">Email validé</th>
 			<th scope="col" colspan="2">Actions</th>
 		</tr>
 	</thead>
@@ -34,6 +35,11 @@
 							</div>
 						</td>
 						<td>
+							<div class="form-group form-switch">
+								<input class="form-check-input" type="checkbox" name="active" <?= ($user->getActive())?"checked":""; ?>>
+							</div>
+						</td>
+						<td>
 							<input type="hidden" name="id" value="<?= $user->getId() ?>">
 							<button class="btn btn-success" type="submit">Valider</button>
 						</td>
@@ -58,6 +64,17 @@
 				</td>
 				<td class="align-middle">					
 					<?php if($user->getAdmin()) : ?>
+						<div class="form-group form-switch">
+							<input class="form-check-input" type="checkbox" checked disabled>
+						</div>
+					<?php else : ?>
+						<div class="form-group form-switch">
+							<input class="form-check-input" type="checkbox" disabled>
+						</div>
+					<?php endif ?>
+				</td>
+				<td class="align-middle">					
+					<?php if($user->getActive()) : ?>
 						<div class="form-group form-switch">
 							<input class="form-check-input" type="checkbox" checked disabled>
 						</div>

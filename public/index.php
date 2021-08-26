@@ -90,6 +90,12 @@ try {
 		['controller' => 'App\Controllers\UserController', 'method' => 'insert'],
 		'user-insert'
 	);
+	$router->map(
+		'GET',
+		'/confirm/[i:userId]/[a:token]',
+		['controller' => 'App\Controllers\UserController', 'method' => 'confirm'],
+		'user-confirm'
+	);
 	
 	
 	//FOR ADMIN

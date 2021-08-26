@@ -14,12 +14,12 @@ $usersId = [];
 $postsId = [];
 
 $password = password_hash('admin', PASSWORD_BCRYPT);
-$pdo->exec("INSERT INTO user SET email='{$faker->safeEmail()}', username='admin', password='$password', admin='1'");
+$pdo->exec("INSERT INTO user SET email='{$faker->safeEmail()}', username='admin', password='$password', admin='1',active='1'");
 $usersId[] = $pdo->lastInsertId();
 
 $password2 = password_hash('visitor', PASSWORD_BCRYPT);
 for ($i = 0; $i < 9; $i++){
-	$pdo->exec("INSERT INTO user SET email='{$faker->safeEmail()}', username='{$faker->userName()}', password='$password2', admin='0'");
+	$pdo->exec("INSERT INTO user SET email='{$faker->safeEmail()}', username='{$faker->userName()}', password='$password2', admin='0', active='1'");
 	$usersId[] = $pdo->lastInsertId();
 }
 

@@ -11,11 +11,15 @@
 <body>
     <?php require_once(PATH_VIEW . "/common/menu.php"); ?>
 
-	<?php if(!empty($_SESSION['alert'])) : ?>
-		<div class="alert <?= $_SESSION['alert']['type'] ?>" role="alert">
-			<?= $_SESSION['alert']['text'] ?>
-		</div>
+	<?php
+		if(!empty($_SESSION['alert'])) :
+			foreach($_SESSION['alert'] as $alert) :
+	?>
+				<div class="alert <?= $alert['type'] ?> m-0" role="alert">
+					<?= $alert['text'] ?>
+				</div>
 	<?php 
+			endforeach;
 		unset($_SESSION['alert']);
 		endif; 
 	?>

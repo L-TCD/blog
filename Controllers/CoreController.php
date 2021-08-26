@@ -4,7 +4,13 @@ namespace App\Controllers;
 
 abstract class CoreController
 {
-	protected function generatePage($data)
+	public function redirect(string $name, array $params = [])
+	{
+		$router = $GLOBALS['router'];
+		header('location: '. $router->generate($name, $params));
+	}
+
+	public function generatePage($data)
 	{
 		extract($data);
 		ob_start();

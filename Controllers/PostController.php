@@ -5,6 +5,8 @@ namespace App\Controllers;
 use App\Controllers\CoreController;
 use App\Models\CommentManager;
 use App\Models\PostManager;
+use App\Utils\Alert;
+
 
 final class PostController extends CoreController
 {
@@ -90,7 +92,7 @@ final class PostController extends CoreController
 	{
 		$this->postManager->update($_POST['title'], $_POST['slug'], $_POST['content'], $_POST['description'], $_POST['author'], (int)$_POST['id']);
 		
-		$_SESSION['alert'] = [
+		$_SESSION['alert'][] = [
 			"type" => "alert-success",
 			"text" => "Mise à jour de l'article ". (int)$_POST['id'] ." effectuée."
 		];
@@ -101,7 +103,7 @@ final class PostController extends CoreController
 	public function delete()
 	{
 		$this->postManager->delete((int)$_POST['id']);
-		$_SESSION['alert'] = [
+		$_SESSION['alert'][] = [
 			"type" => "alert-success",
 			"text" => "Suppression de l'article ". (int)$_POST['id'] ." effectuée."
 		];
@@ -122,7 +124,7 @@ final class PostController extends CoreController
 	public function insert()
 	{
 		$this->postManager->insert($_POST['title'], $_POST['slug'], $_POST['content'], $_POST['description'], $_POST['author']);
-		$_SESSION['alert'] = [
+		$_SESSION['alert'][] = [
 			"type" => "alert-success",
 			"text" => "Enregistrement de l'article ". (int)$_POST['id'] ." effectué."
 		];

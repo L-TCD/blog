@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\CommentManager;
 use App\Controllers\CoreController;
 use App\Models\PostManager;
+use App\Utils\Alert;
 
 final class CommentController extends CoreController
 {
@@ -20,17 +21,17 @@ final class CommentController extends CoreController
 	public function insert()
 	{
 		$this->commentManager->insert((string)$_POST['content'], (int)$_POST['post_id']);
-		$_SESSION['alert'] = [
+		$_SESSION['alert'][] = [
 			"type" => "alert-success",
 			"text" => "Enregistrement du commentaire effectué."
 		];
-		header('location: /articles/'.(int)$_POST['post_id']);
+		$this->redirect("show-post", ["id" => $_POST['post_id']]);
 	}
 	
 	public function delete()
 	{
 		$this->commentManager->delete((int)$_POST['id']);
-		$_SESSION['alert'] = [
+		$_SESSION['alert'][] = [
 			"type" => "alert-success",
 			"text" => "Suppression du commentaire effectuée."
 		];
@@ -51,9 +52,8 @@ final class CommentController extends CoreController
 	
 	public function updateForm()
 	{
-		//copie de PostController->show()
 		$post_id = (int)$_POST['post_id'];
-		$commentToUpdateId = (int)$_POST['id']; // nouveau
+		$commentToUpdateId = (int)$_POST['id'];
 		$post = $this->postManager->find($post_id);
 		$comments = $this->commentManager->findByPostId($post_id);
 		$dataPage = [
@@ -72,10 +72,7 @@ final class CommentController extends CoreController
 	public function update()
 	{
 		$this->commentManager->update((string)$_POST['content'], (int)$_POST['id']);
-		$_SESSION['alert'] = [
-			"type" => "alert-success",
-			"text" => "Modification du commentaire effectuée."
-		];
+ 		Alert::addAlert(Alert::GREEN, 'Modification du commentaire effectuée.');
 		header('location: /articles/'.(int)$_POST['post_id']);
 	}
 
