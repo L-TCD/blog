@@ -4,6 +4,25 @@ namespace App\Controllers;
 
 abstract class CoreController
 {
+	protected $userManager;
+
+	public function isLogged() : bool
+	{
+		if(!empty($_SESSION['auth'])){
+			return true;
+		}
+		return false;
+	}
+
+	public function isAdmin() : bool
+	{
+		if($this->isLogged()){
+			$user = $this->userManager->find((int)$_SESSION['auth']);
+			return $user->getAdmin();
+		}
+		return false;
+	}
+
 	public function redirect(string $name, array $params = [])
 	{
 		$router = $GLOBALS['router'];

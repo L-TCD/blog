@@ -9,8 +9,6 @@ use \DateTime;
 
 final class UserController extends CoreController
 {
-	private $userManager;
-
 	public function __construct()
 	{
 		$this->userManager = new UserManager();	
@@ -18,51 +16,68 @@ final class UserController extends CoreController
 
 	public function showAll()
 	{
-		$users = $this->userManager->findAll("");
-		$dataPage = [
-			"pageDescription" => "Page d'affichage de la liste des Utilisateurs",
-			"pageTitle" => "Liste des Utilisateurs",
-			"users" => $users,
-			"userToUpdateId" => NULL,
-			"view" => PATH_VIEW . "/admin/users.view.php",
-			"template" => PATH_VIEW . "/common/template.php"
-		];
-		$this->generatePage($dataPage);
+		if($this->isAdmin()){
+			$users = $this->userManager->findAll("");
+			$dataPage = [
+				"pageDescription" => "Page d'affichage de la liste des Utilisateurs",
+				"pageTitle" => "Liste des Utilisateurs",
+				"users" => $users,
+				"userToUpdateId" => NULL,
+				"view" => PATH_VIEW . "/admin/users.view.php",
+				"template" => PATH_VIEW . "/common/template.php"
+			];
+			$this->generatePage($dataPage);
+		} else {
+			$this->redirect("main-home");
+		}
+
 	}
 
 	public function adminUpdateForm($params = [])
 	{
-		$userToUpdateId = $params['id'];
-		$users = $this->userManager->findAll("");
-		$dataPage = [
-			"pageDescription" => "Page d'affichage de la liste des Utilisateurs",
-			"pageTitle" => "Modification utilisateur ".$params['id'],
-			"users" => $users,
-			"userToUpdateId" => $userToUpdateId,
-			"view" => PATH_VIEW . "/admin/users.view.php",
-			"template" => PATH_VIEW . "/common/template.php"
-		];
-		$this->generatePage($dataPage);
+		if($this->isAdmin()){
+			$userToUpdateId = $params['id'];
+			$users = $this->userManager->findAll("");
+			$dataPage = [
+				"pageDescription" => "Page d'affichage de la liste des Utilisateurs",
+				"pageTitle" => "Modification utilisateur ".$params['id'],
+				"users" => $users,
+				"userToUpdateId" => $userToUpdateId,
+				"view" => PATH_VIEW . "/admin/users.view.php",
+				"template" => PATH_VIEW . "/common/template.php"
+			];
+			$this->generatePage($dataPage);
+		} else {
+			$this->redirect("main-home");
+		}
 	}
 
 	public function update()
 	{
-		$this->userManager->update(
-			(string)$_POST['email'],
-			(string)$_POST['username'],
-			(bool)$_POST['admin'],
-			(bool)$_POST['active'],
-			(int)$_POST['id']
-		);
-		Alert::addAlert(Alert::GREEN, "Modification de l'utilisateur effectuée.");
-		$this->redirect("admin-users");
+		if($this->isAdmin()){
+			$this->userManager->update(
+				(string)$_POST['email'],
+				(string)$_POST['username'],
+				(bool)$_POST['admin'],
+				(bool)$_POST['active'],
+				(int)$_POST['id']
+			);
+			Alert::addAlert(Alert::GREEN, "Modification de l'utilisateur effectuée.");
+			$this->redirect("admin-users");
+		} else {
+			$this->redirect("main-home");
+		}
 	}
 
 	public function delete()
 	{
-		$this->userManager->delete((int)$_POST['id']);
-		Alert::addAlert(Alert::GREEN, "Suppression de l'utilisateur effectuée.");
-		$this->redirect("admin-users");
+		if($this->isAdmin()){
+			$this->userManager->delete((int)$_POST['id']);
+			Alert::addAlert(Alert::GREEN, "Suppression de l'utilisateur effectuée.");
+			$this->redirect("admin-users");
+		} else {
+			$this->redirect("main-home");
+		}
 	}
 
 	public function insertForm()
@@ -109,7 +124,9 @@ final class UserController extends CoreController
 
 	public function logOut()
 	{
-		session_destroy();
+		if($this->isLogged()){
+			session_destroy();
+		}
 		$this->redirect("main-home");
 	}
 
@@ -206,6 +223,4 @@ final class UserController extends CoreController
 
 		$this->redirect("main-home");
 	}
-
-
 }
