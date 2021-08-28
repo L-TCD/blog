@@ -4,7 +4,7 @@ require_once '../vendor/autoload.php';
 
 use App\Controllers\HomeController;
 
-define('PATH_VIEW', dirname(__DIR__) . '/Xiews');
+define('PATH_VIEW', dirname(__DIR__) . '/Views');
 
 try {
 
