@@ -11,11 +11,24 @@ abstract class CoreModel
 	protected $className;
 
 	protected static function setDB()
-	{
-		self::$pdo = new PDO("mysql:host=localhost;dbname=blog;charset=utf8","root","root", [
-			PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-		]);
-	}
+{
+    // Récupération des données du fichier de config
+    // la fonction parse_ini_file parse le fichier et retourne un array associatif
+    $configData = parse_ini_file(__DIR__ . '/../config.ini');
+    
+    // dsn = Data source name
+    $dsn = "mysql:host={$configData['DB_HOST']};dbname={$configData['DB_NAME']};charset=utf8";
+    
+    self::$pdo = new PDO(
+	    $dsn,
+	    $configData['DB_USERNAME'],
+	    $configData['DB_PASSWORD'],
+	    [
+		PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+	    ]
+    );
+		
+}
 
 	protected function getDB()
 	{
