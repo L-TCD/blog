@@ -81,6 +81,12 @@ try {
 		'log-in'
 	);
 	$router->map(
+		'POST',
+		'/deconnexion/request',
+		['controller' => 'App\Controllers\UserController', 'method' => 'logOut'],
+		'log-out'
+	);
+	$router->map(
 		'GET',
 		'/inscription',
 		['controller' => 'App\Controllers\UserController', 'method' => 'insertForm'],

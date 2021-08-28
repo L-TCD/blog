@@ -1,4 +1,4 @@
-<h1>Page d'ajout d'article</h1>
+<h1 class="text-center mt-3">Page d'ajout d'article</h1>
 
 <form action="/admin/articles/ajout" method="POST">
 	<div class="form-group">

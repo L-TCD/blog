@@ -23,7 +23,7 @@
 					<?php if($post->getCommentToValid() === true) : ?>
 						<form action="/articles/<?= $post->getId() ?>" method="POST" style="display:inline">
 							<button class="btn btn-info" type="submit">
-								Commentaires à valider
+								Nouveau message
 							</button>
 						</form>
 					<?php else : ?>

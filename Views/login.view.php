@@ -1,4 +1,4 @@
-<h1>Connexion</h1>
+<h1 class="text-center mt-3">Connexion</h1>
 
 <form action="/connexion/request" method="post">
 	<div class="form-group">

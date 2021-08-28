@@ -17,12 +17,23 @@
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $router->generate("admin-users") ?>">Gestion utilisateurs</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="<?= $router->generate("user-insert-form") ?>">Inscription</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="<?= $router->generate("log-in-form") ?>">Connexion</a>
-				</li>
+
+				<?php if(empty($_SESSION['auth'])): ?>
+					<li class="nav-item">
+						<a class="nav-link" href="<?= $router->generate("log-in-form") ?>">Connexion</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="<?= $router->generate("user-insert-form") ?>">Inscription</a>
+					</li>
+
+				<?php else: ?>
+					<li class="nav-item">
+						<form action="<?= $router->generate("log-out") ?>" method="post" style="display:inline">
+							<button type="submit" class="nav-link" style="background:transparent; border:none;">Deconnexion</button>
+						</form>
+					</li>
+					
+				<?php endif ?>
 			</ul>
 		</div>
 	</div>

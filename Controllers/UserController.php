@@ -54,21 +54,15 @@ final class UserController extends CoreController
 			(bool)$_POST['active'],
 			(int)$_POST['id']
 		);
-		$_SESSION['alert'][] = [
-			"type" => "alert-success",
-			"text" => "Modification de l'utilisateur effectuée."
-		];
-		header('location: /admin/utilisateurs');
+		Alert::addAlert(Alert::GREEN, "Modification de l'utilisateur effectuée.");
+		$this->redirect("admin-users");
 	}
 
 	public function delete()
 	{
 		$this->userManager->delete((int)$_POST['id']);
-		$_SESSION['alert'][] = [
-			"type" => "alert-success",
-			"text" => "Suppression de l'utilisateur effectuée."
-		];
-		header('location: /admin/utilisateurs');
+		Alert::addAlert(Alert::GREEN, "Suppression de l'utilisateur effectuée.");
+		$this->redirect("admin-users");
 	}
 
 	public function insertForm()
@@ -98,31 +92,25 @@ final class UserController extends CoreController
 		if(!empty($_POST['username']) && !empty($_POST['password'])){
 			$user = $this->userManager->findByUsername((string)$_POST['username']);
 			if($user === false) {
-				$_SESSION['alert'][] = [
-					"type" => "alert-danger",
-					"text" => "Identifiant ou mot de passe incorrect."
-				];
-				header('location: /connexion');
-			}
+				Alert::addAlert(Alert::RED, "Identifiant ou mot de passe incorrect.");
+				$this->redirect("log-in");
 
-			if(password_verify((string)$_POST['password'],$user->getPassword())){
+			}elseif(password_verify((string)$_POST['password'],$user->getPassword())){
 				$_SESSION['auth'] = $user->getId();
-				$_SESSION['alert'][] = [
-					"type" => "alert-success",
-					"text" => "Connexion effectuée."
-				];
-				header('location: /');
+				Alert::addAlert(Alert::GREEN, "Connexion effectuée.");
+				$this->redirect("main-home");
+
 			} else {
-				$_SESSION['alert'][] = [
-					"type" => "alert-danger",
-					"text" => "Identifiant ou mot de passe incorrect."
-				];
-				header('location: /connexion');
+				Alert::addAlert(Alert::RED, "Identifiant ou mot de passe incorrect.");
+				$this->redirect("log-in");
 			}
-
-
 		}
+	}
 
+	public function logOut()
+	{
+		session_destroy();
+		$this->redirect("main-home");
 	}
 
 	public function insert()
@@ -155,6 +143,7 @@ final class UserController extends CoreController
 
 		if(!empty($_SESSION['alert'])){
 			$this->redirect('user-insert-form');
+
 		} else {
 			$token = (string)($username.time());
 			$tokenCrypt = crypt($token, 'rl');

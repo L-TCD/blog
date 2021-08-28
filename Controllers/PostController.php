@@ -91,23 +91,15 @@ final class PostController extends CoreController
 	public function update()
 	{
 		$this->postManager->update($_POST['title'], $_POST['slug'], $_POST['content'], $_POST['description'], $_POST['author'], (int)$_POST['id']);
-		
-		$_SESSION['alert'][] = [
-			"type" => "alert-success",
-			"text" => "Mise à jour de l'article ". (int)$_POST['id'] ." effectuée."
-		];
-
-		header('location: /admin/articles');
+		Alert::addAlert(Alert::GREEN, "Mise à jour de l'article ". (int)$_POST['id'] ." effectuée.");
+		$this->redirect("admin-show-post-list");
 	}
 
 	public function delete()
 	{
 		$this->postManager->delete((int)$_POST['id']);
-		$_SESSION['alert'][] = [
-			"type" => "alert-success",
-			"text" => "Suppression de l'article ". (int)$_POST['id'] ." effectuée."
-		];
-		header('location: /admin/articles');
+		Alert::addAlert(Alert::GREEN, "Suppression de l'article ". (int)$_POST['id'] ." effectuée.");
+		$this->redirect("admin-show-post-list");
 	}
 
 	public function insertForm()
@@ -124,10 +116,7 @@ final class PostController extends CoreController
 	public function insert()
 	{
 		$this->postManager->insert($_POST['title'], $_POST['slug'], $_POST['content'], $_POST['description'], $_POST['author']);
-		$_SESSION['alert'][] = [
-			"type" => "alert-success",
-			"text" => "Enregistrement de l'article ". (int)$_POST['id'] ." effectué."
-		];
-		header('location: /admin/articles');
+		Alert::addAlert(Alert::GREEN, "Enregistrement de l'article ". (int)$_POST['id'] ." effectué.");
+		$this->redirect("admin-show-post-list");
 	}
 }

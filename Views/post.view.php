@@ -1,4 +1,4 @@
-<h1><?= htmlentities($post->getTitle()) ?></h1>
+<h1 class="text-center mt-3"><?= htmlentities($post->getTitle()) ?></h1>
 <hr>
 <p class="text-muted">Publié le <?= $post->getCreatedAt()->format('d/m/Y') ?> par <?= htmlentities($post->getAuthor()) ?></p>
 <p><?= nl2br(htmlentities($post->getContent())) ?></p>
@@ -42,7 +42,7 @@
 			<?php elseif($comment->getValid() === false) : ?>
 				<span class="badge rounded-pill bg-secondary">Message masqué :</span>
 			<?php else : ?>
-				<span class="badge rounded-pill bg-info">Message à valider ou masquer :</span>
+				<span class="badge rounded-pill bg-info">Nouveau message :</span>
 			<?php endif ?>
 			<?php if($comment->getId() === $commentToUpdateId) : ?>
 				<form action="/comment/update" method="POST">

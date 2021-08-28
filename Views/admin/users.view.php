@@ -1,4 +1,4 @@
-<h1 class="text-center mt-3">admin-users</h1>
+<h1 class="text-center mt-3">Gestion des utilisateurs</h1>
 
 <table class="table text-center">
 	<thead>

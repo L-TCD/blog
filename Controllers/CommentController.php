@@ -21,20 +21,14 @@ final class CommentController extends CoreController
 	public function insert()
 	{
 		$this->commentManager->insert((string)$_POST['content'], (int)$_POST['post_id']);
-		$_SESSION['alert'][] = [
-			"type" => "alert-success",
-			"text" => "Enregistrement du commentaire effectué."
-		];
+		Alert::addAlert(Alert::GREEN, 'Enregistrement du commentaire effectué.');
 		$this->redirect("show-post", ["id" => $_POST['post_id']]);
 	}
 	
 	public function delete()
 	{
 		$this->commentManager->delete((int)$_POST['id']);
-		$_SESSION['alert'][] = [
-			"type" => "alert-success",
-			"text" => "Suppression du commentaire effectuée."
-		];
+		Alert::addAlert(Alert::GREEN, 'Suppression du commentaire effectuée.');
 		header('location: /articles/'.(int)$_POST['post_id']);
 	}
 	
@@ -66,14 +60,13 @@ final class CommentController extends CoreController
 			"template" => PATH_VIEW . "/common/template.php"
 		];
 		$this->generatePage($dataPage);
-
 	}
 
 	public function update()
 	{
 		$this->commentManager->update((string)$_POST['content'], (int)$_POST['id']);
  		Alert::addAlert(Alert::GREEN, 'Modification du commentaire effectuée.');
-		header('location: /articles/'.(int)$_POST['post_id']);
+		$this->redirect("show-post", ["id" => (int)$_POST['post_id']]);
 	}
 
 }

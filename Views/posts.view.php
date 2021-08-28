@@ -1,4 +1,4 @@
-<h1>show-post-list</h1>
+<h1 class="text-center mt-3">Liste des articles</h1>
 
 <div class="row">
 	<?php foreach($posts as $post): ?>

@@ -1,4 +1,4 @@
-<h1>Inscription</h1>
+<h1 class="text-center mt-3">Inscription</h1>
 
 <form action="/inscription/request" method="post">
 	<div class="form-group">

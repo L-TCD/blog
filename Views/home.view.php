@@ -1,9 +1,5 @@
-<h1>Accueil</h1>
-<p>Paragraphe</p>
-
+<h1 class="text-center mt-3">Accueil</h1>
 <?php
-
-use Faker\Provider\Base;
 
 if(!empty($_SESSION['auth'])) : ?>
 	Connecté en tant que user n° <?= $_SESSION['auth'] ?>

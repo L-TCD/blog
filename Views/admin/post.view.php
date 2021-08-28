@@ -1,4 +1,4 @@
-<h1>Page d'édition d'article</h1>
+<h1 class="text-center mt-3">Page d'édition d'article</h1>
 
 <form action="/admin/articles/edition" method="POST">
 	<div class="text-muted">Publié le <?= $post->getCreatedAt()->format('d/m/Y') ?></div>
