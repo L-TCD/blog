@@ -6,6 +6,8 @@ use App\Controllers\HomeController;
 
 define('PATH_VIEW', dirname(__DIR__) . '/Views');
 
+date_default_timezone_set('Europe/Paris');
+
 try {
 
 	$router = new AltoRouter();

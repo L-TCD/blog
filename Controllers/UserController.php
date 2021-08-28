@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\UserManager;
 use App\Controllers\CoreController;
 use App\Utils\Alert;
+use \DateTime;
 
 final class UserController extends CoreController
 {
@@ -160,29 +161,18 @@ final class UserController extends CoreController
 			
 			$userId = $this->userManager->insert($email, $username, $password, $tokenCrypt);
 			$subject = 'Lien de validation';
-			$from = 'teamcookiedevelopment@gmail.com';
 
 			$message = '<h1>Bienvenue !</h1>';
 			$message .= '<p>Pour valider votre inscription sur le blog, <a href="http://localhost:8000/confirm/'.$userId.'/'.$tokenCrypt.'">Cliquez ici</a>.</p>';
 			$message .= '<p> A très vite !</p><br>';
-			$message .= 'http://localhost:8000/confirm/'.$userId.'/'.$tokenCrypt.'<br>';
-			$message .= 'token : '.$token.'<br>';
-			$message .= 'tokenCrypt : '.$tokenCrypt;
-
-
-
-			// $message .= '</body></html>';
 
 			$headers = "MIME-Version: 1.0" . "\r\n";
 			$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-			$headers .= 'From: '. $from . "\r\n";
-
-
 
 			if(mail($email, $subject, $message, $headers)){
 				$_SESSION['alert'][] = [
 					"type" => "alert-success",
-					"text" => "Vous allez recevoir un email automatique avec un lien pour valider votre inscription."
+					"text" => "Vous allez recevoir un email automatique avec un lien pour valider votre inscription (valable seulement 24h)."
 				];
 			} else{
 				$_SESSION['alert'][] = [
@@ -201,21 +191,30 @@ final class UserController extends CoreController
 		$user = $this->userManager->find($userId);
 		if($user !== false) {
 			$token = $user->getToken();
+			$now = new DateTime("now");
+			$interval = $user->getTokenDate()->diff($now);
+			$days = $interval->format('%a');
 		}
 
 		if($user === false){
 			Alert::addAlert(Alert::RED, 'Utilisateur inconnu.');
+
 		} elseif($user->getActive() === true){
 			Alert::addAlert(Alert::RED, 'Compte utilisateur déjà validé');
-		} elseif($token == $tokenCrypt){ 
-				$this->userManager->setActive(true, $userId);
-				$_SESSION['auth'] = $userId;
-				Alert::addAlert(Alert::GREEN, 'Validation compte utilisateur effectuée');
+
+		} elseif($user->getActive() === false && $token == $tokenCrypt && $days >= 1){
+			$this->userManager->delete($userId);
+			Alert::addAlert(Alert::RED, "Le lien de validation n'est plus valide, il faut recommencer l'inscription");
+
+		} elseif($token == $tokenCrypt && $days < 1){ 
+			$this->userManager->setActive(true, $userId);
+			$_SESSION['auth'] = $userId;
+			Alert::addAlert(Alert::GREEN, 'Validation compte utilisateur effectuée');
+
 		} else {
 			Alert::addAlert(Alert::RED, 'Lien de validation incorrect');
-			dump($token);
-			dump($tokenCrypt);
 		}
+
 		$this->redirect("main-home");
 	}
 

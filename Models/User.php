@@ -51,12 +51,9 @@ final class User
 		return $this->token;
 	}
 
-	public function getTokenDate() : ?DateTime
+	public function getTokenDate() : DateTime
 	{
-		if(!empty($token_date)){
-			return new DateTime($this->token_date);
-		}
-		return null;
+		return new DateTime($this->token_date);
 	}
 
 	public function setEmail()
