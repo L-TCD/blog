@@ -4,12 +4,18 @@
 	Connecté en tant que user n° <?= $_SESSION['auth'] ?>
 <?php endif ?>
 
-
-
 <div class="col-md-9 mx-auto">
 	<h2 class="text-center mt-5">Formulaire de contact</h2>
 	<form action="/contact" method="POST">
 		<div class="row g-3">
+			<div class="col-md-6">
+				<label for="firstName" class="form-label">Prénom</label>
+				<input type="text" class="form-control" name="firstName" id="firstName" placeholder="" value="<?php if(!empty($firstName)){echo $firstName;} ?>" required>
+			</div>
+			<div class="col-md-6">
+				<label for="lastName" class="form-label">Nom</label>
+				<input type="text" class="form-control" name="lastName" id="lastName" placeholder="" value="<?php if(!empty($lastName)){echo $lastName;} ?>" required>
+			</div>
 			<div class="col-12">
 				<label for="email" class="form-label">Votre Email</label>
 				<input type="email" class="form-control" name="email" id="email" placeholder="votre_email@exemple.com" value="<?php if(!empty($email)){echo $email;} ?>" required>
