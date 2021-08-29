@@ -76,9 +76,4 @@ final class UserManager extends CoreModel
 
 	}
 
-	public function isAdmin(int $id)
-	{
-		
-	}
-
 }

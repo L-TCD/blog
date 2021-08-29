@@ -135,27 +135,18 @@ final class UserController extends CoreController
 		$email = (string)$_POST['email'];
 		$userWanted2 = $this->userManager->findByEmail($email);
 		if($userWanted2 && $email === $userWanted2->getEmail()){
-			$_SESSION['alert'][] = [
-				"type" => "alert-danger",
-				"text" => "Un compte existe déjà pour cet email."
-			];
+			Alert::addAlert(Alert::RED, "Un compte existe déjà pour cet email.");
 		};
 
 		$username = (string)$_POST['username'];
 		$userWanted = $this->userManager->findByUsername($username);
 		if($userWanted && $username === $userWanted->getUsername()){
-			$_SESSION['alert'][] = [
-				"type" => "alert-danger",
-				"text" => "Nom d'utilisateur déjà pris."
-			];
+			Alert::addAlert(Alert::RED, "Nom d'utilisateur déjà pris.");
 		};
 
 		$password = (string)$_POST['password'];
 		if(strlen($password) < 4 || strlen($password) > 10){
-			$_SESSION['alert'][] = [
-				"type" => "alert-danger",
-				"text" => "La longueur du mot de passe doit être comprise entre 4 et 10 caractères."
-			];
+			Alert::addAlert(Alert::RED, "La longueur du mot de passe doit être comprise entre 4 et 10 caractères.");
 		};
 
 		if(!empty($_SESSION['alert'])){
@@ -176,15 +167,9 @@ final class UserController extends CoreController
 			$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 
 			if(mail($email, $subject, $message, $headers)){
-				$_SESSION['alert'][] = [
-					"type" => "alert-success",
-					"text" => "Vous allez recevoir un email automatique avec un lien pour valider votre inscription (valable seulement 24h)."
-				];
+				Alert::addAlert(Alert::GREEN, 'Vous allez recevoir un email automatique avec un lien pour valider votre inscription (valable seulement 24h).');
 			} else{
-				$_SESSION['alert'][] = [
-					"type" => "alert-danger",
-					"text" => "Problème d'envoi d'email."
-				];
+				Alert::addAlert(Alert::RED, "Problème d'envoi d'email.");
 			}
 			$this->redirect('main-home');
 		}

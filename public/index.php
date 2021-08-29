@@ -20,6 +20,12 @@ try {
 		'main-home'
 	);
 	$router->map(
+		'POST',
+		'/contact',
+		['controller' => 'App\Controllers\HomeController', 'method' => 'contact'],
+		'contact'
+	);
+	$router->map(
 		'GET',
 		'/articles',
 		['controller' => 'App\Controllers\PostController', 'method' => 'showAll'],

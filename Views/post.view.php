@@ -4,7 +4,7 @@
 <p><?= nl2br(htmlentities($post->getContent())) ?></p>
 <br>
 
-<h2 class="text-center mt-3">Commentaires</h2>
+<h2 class="text-center">Commentaires</h2>
 <hr>
 
 <?php foreach($comments as $comment): ?>
@@ -72,7 +72,7 @@
 	<?php endif ?>
 <?php endforeach ?>
 
-<h2 class="text-center mt-3">Nouveau message</h2>
+<h2 class="text-center">Nouveau message</h2>
 <hr>
 
 <?php if(!empty($_SESSION['auth'])) : ?>
