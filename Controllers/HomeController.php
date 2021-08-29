@@ -8,6 +8,13 @@ use App\Utils\Validator;
 
 final class HomeController extends CoreController
 {
+
+	private $validator;
+
+	public function __construct()
+	{
+		$this->validator = new Validator;
+	}
 	public function home()
 	{
 		$dataPage = [
@@ -32,15 +39,11 @@ final class HomeController extends CoreController
 		$headers .= "From: ". $email . "\r\n";
 		$headers .= "Reply-To: ". $email . "\r\n";
 
-		if(
-			!Validator::verifMail($email) ||
-			(strlen($object) < 3 || strlen($object) > 60) ||
-			(strlen($message) < 3 || strlen($message) > 2000)	
-		){
-			if(!Validator::verifMail($email)){Alert::addAlert(Alert::RED, "Le format de l'adresse email est invalide.");}
-			if(strlen($object) < 3 || strlen($object) > 60){Alert::addAlert(Alert::RED, "La longueur de l'objet doit être comprise entre 3 et 60 caractères");}
-			if(strlen($message) < 3 || strlen($message) > 2000){Alert::addAlert(Alert::RED, "La longueur du message doit être comprise entre 3 et 2000 caractères");}
-		} else {
+		$this->validator->checkInputEmail($email);
+		$this->validator->checkInputText($object, "de l'objet", 3, 60);
+		$this->validator->checkInputText($object, "du message", 3, 2000);
+
+		if(empty($_SESSION['alert'])){
 			if(mail($to, $object, $message, $headers)){
 				Alert::addAlert(Alert::GREEN, 'Message envoyé, merci.');
 				$email = "";

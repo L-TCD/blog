@@ -2,18 +2,31 @@
 
 namespace App\Utils;
 
+use App\Utils\Alert;
+
 class Validator
 {
-
-	public static function verifMail($emailAdress) : bool
+/**
+ * Return true if email is valid and return false with an alert if it's not.
+ */
+	public function checkInputEmail($emailAdress) : bool
 	{
 		if (filter_var ($emailAdress, FILTER_VALIDATE_EMAIL) === false) {
+			Alert::addAlert(Alert::RED, "Le format de l'adresse email est invalide.");
 			return false;
 		} else {
 			return true;
 		}
 	}
 
-	// test + alert en cas d'erreur et redirect si présence d'une Alerte
+	public function checkInputText($input, $name, $min, $max) : bool
+	{
+		if (strlen($input) < $min || strlen($input) > $max) {
+			Alert::addAlert(Alert::RED, "La longueur $name doit être comprise entre $min et $max caractères");
+			return false;
+		} else {
+			return true;
+		}
+	}	
 
 }

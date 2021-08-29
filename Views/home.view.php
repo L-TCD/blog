@@ -12,7 +12,7 @@
 		<div class="row g-3">
 			<div class="col-12">
 				<label for="email" class="form-label">Votre Email</label>
-				<input type="email" class="form-control" name="email" id="email" placeholder="votreEmail@exemple.com" value="<?php if(!empty($email)){echo $email;} ?>" required>
+				<input type="email" class="form-control" name="email" id="email" placeholder="votre_email@exemple.com" value="<?php if(!empty($email)){echo $email;} ?>" required>
 			</div>
 			<div class="col-12">
 				<label for="object" class="form-label">Objet</label>

@@ -5,13 +5,17 @@ namespace App\Controllers;
 use App\Models\UserManager;
 use App\Controllers\CoreController;
 use App\Utils\Alert;
+use App\Utils\Validator;
 use \DateTime;
 
 final class UserController extends CoreController
 {
+	private $validator;
+
 	public function __construct()
 	{
-		$this->userManager = new UserManager();	
+		$this->userManager = new UserManager();
+		$this->validator = new Validator;
 	}
 
 	public function showAll()
@@ -133,26 +137,25 @@ final class UserController extends CoreController
 	public function insert()
 	{	
 		$email = (string)$_POST['email'];
-		$userWanted2 = $this->userManager->findByEmail($email);
-		if($userWanted2 && $email === $userWanted2->getEmail()){
-			Alert::addAlert(Alert::RED, "Un compte existe déjà pour cet email.");
-		};
+		if($this->validator->checkInputEmail($email)){
+			$userWanted2 = $this->userManager->findByEmail($email);
+			if($userWanted2 && $email === $userWanted2->getEmail()){
+				Alert::addAlert(Alert::RED, "Un compte existe déjà pour cet email.");
+			};
+		}
 
 		$username = (string)$_POST['username'];
-		$userWanted = $this->userManager->findByUsername($username);
-		if($userWanted && $username === $userWanted->getUsername()){
-			Alert::addAlert(Alert::RED, "Nom d'utilisateur déjà pris.");
-		};
+		if($this->validator->checkInputText($username, "du nom d'utilisateur", 3, 20)){
+			$userWanted = $this->userManager->findByUsername($username);
+			if($userWanted && $username === $userWanted->getUsername()){
+				Alert::addAlert(Alert::RED, "Nom d'utilisateur déjà pris.");
+			};
+		}
 
 		$password = (string)$_POST['password'];
-		if(strlen($password) < 4 || strlen($password) > 10){
-			Alert::addAlert(Alert::RED, "La longueur du mot de passe doit être comprise entre 4 et 10 caractères.");
-		};
+		$this->validator->checkInputText($password, "du mot de passe", 4, 20);
 
-		if(!empty($_SESSION['alert'])){
-			$this->redirect('user-insert-form');
-
-		} else {
+		if(empty($_SESSION['alert'])){
 			$token = (string)($username.time());
 			$tokenCrypt = crypt($token, 'rl');
 			
@@ -172,6 +175,8 @@ final class UserController extends CoreController
 				Alert::addAlert(Alert::RED, "Problème d'envoi d'email.");
 			}
 			$this->redirect('main-home');
+		} else {
+			$this->redirect('user-insert-form');
 		}
 	}
 
