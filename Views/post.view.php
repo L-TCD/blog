@@ -15,7 +15,7 @@
 	<?php if($admin) : ?>
 		<div class="mb-5">
 			<div class="text-muted mb-2">
-				Publié le <?= $comment->getCreatedAt()->format('d/m/Y à H:i:s') ?> par <?= htmlentities($comment->getUsername()) ?>
+				Le <?= $comment->getCreatedAt()->format('d/m/Y à H:i:s') ?> par <?= htmlentities($comment->getUsername()) ?>
 				<form action="/comment/show" method="POST" style="display:inline">
 					<input type="hidden" name="post_id" value="<?= $post->getId() ?>">
 					<input type="hidden" name="id" value="<?= $comment->getId() ?>">

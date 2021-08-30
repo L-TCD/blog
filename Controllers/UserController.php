@@ -116,6 +116,7 @@ final class UserController extends CoreController
 
 			}elseif(password_verify((string)$_POST['password'],$user->getPassword())){
 				$_SESSION['auth'] = $user->getId();
+				$_SESSION['adminNav'] = $user->getAdmin();
 				Alert::addAlert(Alert::GREEN, "Connexion effectuée.");
 				$this->redirect("main-home");
 

@@ -24,7 +24,7 @@ for ($i = 0; $i < 9; $i++){
 }
 
 for ($i = 0; $i < 50; $i++){
-	$pdo->exec("INSERT INTO post SET title='{$faker->sentence()}', content='{$faker->paragraphs(rand(3,15), true)}', description='{$faker->text(rand(10,30))}', created_at='{$faker->date('Y-m-d')} {$faker->time('H:i:s')}', author='Jean De La Fontaine'");
+	$pdo->exec("INSERT INTO post SET title='{$faker->sentence()}', content='{$faker->paragraphs(rand(3,15), true)}', description='{$faker->paragraphs(1, true)}', created_at='{$faker->date('Y-m-d')} {$faker->time('H:i:s')}', author='Jean De La Fontaine'");
 	$postsId[] = $pdo->lastInsertId();
 }
 

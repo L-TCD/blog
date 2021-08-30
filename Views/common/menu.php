@@ -9,15 +9,19 @@
 					<a class="nav-link" aria-current="page" href="/">Accueil</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="<?= $router->generate("show-post-list") ?>">Liste articles</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="<?= $router->generate("admin-show-post-list") ?>">Gestion articles</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="<?= $router->generate("admin-users") ?>">Gestion utilisateurs</a>
+					<a class="nav-link" href="<?= $router->generate("show-post-list") ?>">Articles</a>
 				</li>
 			</ul>
+			<?php if(!empty($_SESSION['adminNav']) && $_SESSION['adminNav'] == true): ?>
+				<ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+					<li class="nav-item">
+						<a class="nav-link" href="<?= $router->generate("admin-show-post-list") ?>">Gestion articles</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="<?= $router->generate("admin-users") ?>">Gestion utilisateurs</a>
+					</li>
+				</ul>
+			<?php endif ?>
 			<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 				<?php if(empty($_SESSION['auth'])): ?>
 					<li class="nav-item">
