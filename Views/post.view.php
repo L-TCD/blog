@@ -1,6 +1,10 @@
 <h1 class="text-center mt-3"><?= htmlentities($post->getTitle()) ?></h1>
 <hr>
-<p class="text-muted">Publié le <?= $post->getCreatedAt()->format('d/m/Y') ?> par <?= htmlentities($post->getAuthor()) ?></p>
+<p class="text-muted">Publié le <?= $post->getCreatedAt()->format('d/m/Y') ?> par <?= htmlentities($post->getAuthor()) ?>.
+<?php if(!empty($post->getUpdateAt())) : ?>
+	(Dernière modification le <?= $post->getUpdateAt()->format('d/m/Y à H:i:s') ?>)</p>
+<?php endif ?>
+<p class="text-muted"><?= nl2br(htmlentities($post->getDescription())) ?></p><br>
 <p><?= nl2br(htmlentities($post->getContent())) ?></p>
 <br>
 
@@ -11,7 +15,7 @@
 	<?php if($admin) : ?>
 		<div class="mb-5">
 			<div class="text-muted mb-2">
-				Le <?= $comment->getCreatedAt()->format('d/m/Y à H:i:s') ?> par <?= htmlentities($comment->getUsername()) ?> :
+				Publié le <?= $comment->getCreatedAt()->format('d/m/Y à H:i:s') ?> par <?= htmlentities($comment->getUsername()) ?>
 				<form action="/comment/show" method="POST" style="display:inline">
 					<input type="hidden" name="post_id" value="<?= $post->getId() ?>">
 					<input type="hidden" name="id" value="<?= $comment->getId() ?>">

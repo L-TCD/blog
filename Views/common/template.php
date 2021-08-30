@@ -16,7 +16,9 @@
 			foreach($_SESSION['alert'] as $alert) :
 	?>
 				<div class="alert <?= $alert['type'] ?> m-0" role="alert">
-					<?= $alert['text'] ?>
+					<div class="container">
+						<?= $alert['text'] ?>
+					</div>
 				</div>
 	<?php 
 			endforeach;
@@ -25,7 +27,7 @@
 	?>
 
 
-	<div class="container-fluid">
+	<div class="container">
     	<?= $pageContent; ?>
 	</div>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

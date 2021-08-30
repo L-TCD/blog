@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-	<div class="container-fluid">
+	<div class="container">
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
 		</button>
@@ -17,7 +17,8 @@
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $router->generate("admin-users") ?>">Gestion utilisateurs</a>
 				</li>
-
+			</ul>
+			<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 				<?php if(empty($_SESSION['auth'])): ?>
 					<li class="nav-item">
 						<a class="nav-link" href="<?= $router->generate("log-in-form") ?>">Connexion</a>
@@ -25,14 +26,12 @@
 					<li class="nav-item">
 						<a class="nav-link" href="<?= $router->generate("user-insert-form") ?>">Inscription</a>
 					</li>
-
 				<?php else: ?>
 					<li class="nav-item">
 						<form action="<?= $router->generate("log-out") ?>" method="post" style="display:inline">
 							<button type="submit" class="nav-link" style="background:transparent; border:none;">Deconnexion</button>
 						</form>
 					</li>
-					
 				<?php endif ?>
 			</ul>
 		</div>

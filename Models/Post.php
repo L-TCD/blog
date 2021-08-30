@@ -46,9 +46,11 @@ final class Post
 		return new DateTime($this->created_at);
 	}
 
-	public function getUpdateAt() : DateTime
+	public function getUpdateAt() : ?DateTime
 	{
-		return new DateTime($this->update_at);
+		if($this->update_at !== null){
+			return new DateTime($this->update_at);
+		} return null;
 	}
 
 	public function getAuthor() : string
