@@ -8,7 +8,6 @@ final class Post
 {	
 	private int $id;
 	private string $title;
-	private string $slug;
 	private string $content;
 	private string $description;
 	private string $created_at;
@@ -24,11 +23,6 @@ final class Post
 	public function getTitle() : string
 	{
 		return $this->title;
-	}
-
-	public function getSlug() : string
-	{
-		return $this->slug;
 	}
 
 	public function getContent() : string

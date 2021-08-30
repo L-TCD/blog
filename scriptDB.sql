@@ -14,7 +14,6 @@ CREATE TABLE `user` (
 CREATE TABLE `post` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(255) NOT NULL,
-  `slug` VARCHAR(255) NOT NULL,
   `content` TEXT(10000) NOT NULL,
   `description` TEXT(3500) NOT NULL,
   `created_at` DATETIME NOT NULL,

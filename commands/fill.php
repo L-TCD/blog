@@ -24,7 +24,7 @@ for ($i = 0; $i < 9; $i++){
 }
 
 for ($i = 0; $i < 50; $i++){
-	$pdo->exec("INSERT INTO post SET title='{$faker->sentence()}', slug='{$faker->slug()}', content='{$faker->paragraphs(rand(3,15), true)}', description='{$faker->text(rand(10,30))}', created_at='{$faker->date('Y-m-d')} {$faker->time('H:i:s')}', author='Jean De La Fontaine'");
+	$pdo->exec("INSERT INTO post SET title='{$faker->sentence()}', content='{$faker->paragraphs(rand(3,15), true)}', description='{$faker->text(rand(10,30))}', created_at='{$faker->date('Y-m-d')} {$faker->time('H:i:s')}', author='Jean De La Fontaine'");
 	$postsId[] = $pdo->lastInsertId();
 }
 
@@ -33,12 +33,3 @@ foreach($postsId as $postId){
 		$pdo->exec("INSERT INTO comment SET content='{$faker->paragraphs(rand(1,2), true)}', created_at='{$faker->date('Y-m-d')} {$faker->time('H:i:s')}', user_id='{$faker->randomElement($usersId)}', post_id='$postId'");
 	}
 }
-
-// for($i = 0; $i < 10; $i++){
-// 	//Obtenir l'image :
-// 	$url = $faker->imageUrl();
-// 	//Définir le chemin et le nom du fichier
-// 	$img = "./public/pictures/picture_$i.png";
-// 	//Enregistrer
-// 	file_put_contents($img, file_get_contents($url));
-// }

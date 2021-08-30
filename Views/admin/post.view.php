@@ -11,10 +11,6 @@
 			<input type="text" class="form-control" id="title" name="title" value="<?= htmlentities($post->getTitle()) ?>">
 		</div>
 		<div class="form-group">
-			<label for="slug" class="form-label">Slug :</label>
-			<input type="text" class="form-control" id="slug" name="slug" value="<?= htmlentities($post->getSlug()) ?>">
-		</div>
-		<div class="form-group">
 			<label for="author" class="form-label">Auteur :</label>
 			<input type="text" class="form-control" id="author" name="author" value="<?= htmlentities($post->getAuthor()) ?>">
 		</div>

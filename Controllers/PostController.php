@@ -104,7 +104,7 @@ final class PostController extends CoreController
 	public function update()
 	{
 		if($this->isAdmin()){
-			$this->postManager->update($_POST['title'], $_POST['slug'], $_POST['content'], $_POST['description'], $_POST['author'], (int)$_POST['id']);
+			$this->postManager->update($_POST['title'], $_POST['content'], $_POST['description'], $_POST['author'], (int)$_POST['id']);
 			Alert::addAlert(Alert::GREEN, "Mise à jour de l'article ". (int)$_POST['id'] ." effectuée.");
 			$this->redirect("admin-show-post-list");
 		} else {
@@ -142,7 +142,7 @@ final class PostController extends CoreController
 	public function insert()
 	{
 		if($this->isAdmin()){
-			$this->postManager->insert($_POST['title'], $_POST['slug'], $_POST['content'], $_POST['description'], $_POST['author']);
+			$this->postManager->insert($_POST['title'], $_POST['content'], $_POST['description'], $_POST['author']);
 			Alert::addAlert(Alert::GREEN, "Enregistrement de l'article ". (int)$_POST['id'] ." effectué.");
 			$this->redirect("admin-show-post-list");
 		} else {
