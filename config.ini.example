@@ -3,10 +3,10 @@
 ;   - ensuite, dans ce fichier config.ini, définir une valeur pour chaque paramètre
 
 ; base de données
-DB_HOST=localhost
-DB_NAME=
-DB_USERNAME=
-DB_PASSWORD=
+DB_HOST=exampleLocalhost
+DB_NAME=exampleBlog
+DB_USERNAME=exampleUsername
+DB_PASSWORD=examplePassword
 
-; email
-CONTACT_EMAIL=youradress@exemple.com
+; contact form email :
+CONTACT_EMAIL=example@exemple.com

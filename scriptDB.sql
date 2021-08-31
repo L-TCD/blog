@@ -7,7 +7,6 @@ CREATE TABLE `user` (
   `active` TINYINT(1) NOT NULL,
   `token` VARCHAR(255) NULL,
   `token_date` DATETIME NULL,
-
   PRIMARY KEY (`id`)
 );
 
