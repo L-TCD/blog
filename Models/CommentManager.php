@@ -32,15 +32,16 @@ final class CommentManager extends CoreModel
 		return $datas;
 	}
 
-	public function insert(string $content, int $post_id)
+	public function insert(string $content, int $user_id, int $post_id)
 	{
 		$query = $this->getDB()->prepare("INSERT INTO {$this->table} SET 
 			content = :content,
 			created_at = NOW(),
-			user_id = 1,
+			user_id = :user_id,
 			post_id = :post_id"
 		);
 		$query->bindValue(":content",$content,PDO::PARAM_STR);
+		$query->bindValue(":user_id",$user_id,PDO::PARAM_INT);
 		$query->bindValue(":post_id",$post_id,PDO::PARAM_INT);
 		$query->execute();
 	}

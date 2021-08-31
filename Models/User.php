@@ -55,39 +55,4 @@ final class User
 	{
 		return new DateTime($this->token_date);
 	}
-
-	public function setEmail()
-	{
-		//
-	}
-
-	public function setUsername()
-	{
-		//
-	}
-
-	public function setPassword()
-	{
-		//
-	}
-
-	public function setAdmin(bool $bool)
-	{
-		//
-	}
-
-	public function setActive(bool $bool)
-	{
-		//
-	}
-
-	public function setToken()
-	{
-		//
-	}
-
-	public function setTokenDate()
-	{
-		//
-	}
 }

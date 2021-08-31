@@ -10,7 +10,6 @@ final class Comment
 	private string $content;
 	private string $created_at;
 	private ?bool $valid;
-	private ?bool $rejected;
 	private int $user_id;
 	private string $username;
 	private int $post_id;
@@ -33,11 +32,6 @@ final class Comment
 	public function getValid() : ?bool
 	{
 		return $this->valid;
-	}
-
-	public function getRejected() : ?bool
-	{
-		return $this->rejected;
 	}
 
 	public function getUserId() : int

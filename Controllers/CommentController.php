@@ -23,8 +23,8 @@ final class CommentController extends CoreController
 	public function insert()
 	{
 		if($this->isLogged()){
-			$this->commentManager->insert((string)$_POST['content'], (int)$_POST['post_id']);
-			Alert::addAlert(Alert::GREEN, 'Enregistrement du commentaire effectué.');
+			$this->commentManager->insert((string)$_POST['content'], (int)$_SESSION['auth'], (int)$_POST['post_id']);
+			Alert::addAlert(Alert::GREEN, 'Enregistrement du commentaire effectué. En attente de validation par un administrateur.');
 			$this->redirect("show-post", ["id" => $_POST['post_id']]);
 		} else {
 			$this->redirect("main-home");

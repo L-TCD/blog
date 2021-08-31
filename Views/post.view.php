@@ -65,14 +65,16 @@
 			</div>
 		</div>
 	<?php else : ?>
-		<div class="mb-5">
-			<div class="text-muted mb-2">
-				Le <?= $comment->getCreatedAt()->format('d/m/Y à H:i:s') ?> par <?= htmlentities($comment->getUsername()) ?> :
+		<?php if($comment->getValid() === true) : ?>
+			<div class="mb-5">
+				<div class="text-muted mb-2">
+					Le <?= $comment->getCreatedAt()->format('d/m/Y à H:i:s') ?> par <?= htmlentities($comment->getUsername()) ?> :
+				</div>
+				<div class="mx-3">
+					<?= nl2br(htmlentities($comment->getContent())) ?></p>
+				</div>
 			</div>
-			<div class="mx-3">
-				<?= nl2br(htmlentities($comment->getContent())) ?></p>
-			</div>
-		</div>
+		<?php endif ?>
 	<?php endif ?>
 <?php endforeach ?>
 
