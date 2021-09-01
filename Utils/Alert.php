@@ -2,6 +2,8 @@
 
 namespace App\Utils;
 
+use App\Utils\Session;
+
 class Alert
 {
 	public const RED = "alert-danger";
@@ -9,9 +11,13 @@ class Alert
 
 	public static function addAlert(string $type, string $text)
 	{
-		$_SESSION['alert'][] = [
+		Session::put('alert',[
 			"type" => $type,
 			"text" => $text
-		];
+		]);
+		// $_SESSION['alert'][] = [
+		// 	"type" => $type,
+		// 	"text" => $text
+		// ];
 	}
 }
