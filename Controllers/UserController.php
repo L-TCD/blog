@@ -58,13 +58,18 @@ final class UserController extends CoreController
 
 	public function update()
 	{
+
 		$email = filter_input(INPUT_POST, 'email');
 		$username = filter_input(INPUT_POST, 'username');
 		$admin = filter_input(INPUT_POST, 'admin', FILTER_VALIDATE_BOOL) ?? false;
 		$active = filter_input(INPUT_POST, 'active', FILTER_VALIDATE_BOOL) ?? false;
 		$id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
 
-			if($this->isAdmin()){
+		$validator = new Validator;
+		// dd($validator->checkInputEmail($email));
+		// à compléter
+			if($validator->checkInputEmail($email) && $validator->checkInputText($username, 'text', 2, 10) && !empty($id) &&
+			$this->isAdmin()){
 				$this->userManager->update($email, $username, $admin, $active, $id);
 				Alert::addAlert(Alert::GREEN, "Modification de l'utilisateur effectuée.");
 				$this->redirect("admin-users");
