@@ -40,11 +40,11 @@ final class UserController extends CoreController
 	public function adminUpdateForm($params = [])
 	{
 		if($this->isAdmin()){
-			$userToUpdateId = $params['id'];
+			$userToUpdateId = (int)$params['id'];
 			$users = $this->userManager->findAll("");
 			$dataPage = [
 				"pageDescription" => "Page d'affichage de la liste des Utilisateurs",
-				"pageTitle" => "Modification utilisateur ".$params['id'],
+				"pageTitle" => "Modification utilisateur ".$userToUpdateId,
 				"users" => $users,
 				"userToUpdateId" => $userToUpdateId,
 				"view" => PATH_VIEW . "/admin/users.view.php",
@@ -58,18 +58,26 @@ final class UserController extends CoreController
 
 	public function update()
 	{
-		if($this->isAdmin()){
-			$this->userManager->update(
-				(string)$_POST['email'],
-				(string)$_POST['username'],
-				(bool)$_POST['admin'],
-				(bool)$_POST['active'],
-				(int)$_POST['id']
-			);
-			Alert::addAlert(Alert::GREEN, "Modification de l'utilisateur effectuée.");
-			$this->redirect("admin-users");
-		} else {
-			$this->redirect("main-home");
+		if(
+			isset($_POST['email']) &&
+			isset($_POST['username']) &&
+			isset($_POST['admin']) &&
+			isset($_POST['active']) &&
+			isset($_POST['id'])
+		) {
+			$email = $this->escape($_POST['email']);
+			$username = $this->escape($_POST['username']);
+			$admin = (bool)$_POST['admin'];
+			$active = (bool)$_POST['active'];
+			$id = (int)$_POST['id'];
+			
+			if($this->isAdmin()){
+				$this->userManager->update($email, $username, $admin, $active, $id);
+				Alert::addAlert(Alert::GREEN, "Modification de l'utilisateur effectuée.");
+				$this->redirect("admin-users");
+			} else {
+				$this->redirect("main-home");
+			}
 		}
 	}
 
@@ -109,12 +117,12 @@ final class UserController extends CoreController
 	public function logIn()
 	{
 		if(!empty($_POST['username']) && !empty($_POST['password'])){
-			$user = $this->userManager->findByUsername((string)$_POST['username']);
+			$user = $this->userManager->findByUsername($this->escape($_POST['username']));
 			if($user === false) {
 				Alert::addAlert(Alert::RED, "Identifiant ou mot de passe incorrect.");
 				$this->redirect("log-in");
 
-			}elseif(password_verify((string)$_POST['password'],$user->getPassword())){
+			}elseif(password_verify($this->escape($_POST['password']),$user->getPassword())){
 				$_SESSION['auth'] = $user->getId();
 				$_SESSION['adminNav'] = $user->getAdmin();
 				Alert::addAlert(Alert::GREEN, "Connexion effectuée.");
@@ -137,7 +145,7 @@ final class UserController extends CoreController
 
 	public function insert()
 	{	
-		$email = (string)$_POST['email'];
+		$email = $this->escape($_POST['email']);
 		if($this->validator->checkInputEmail($email)){
 			$userWanted2 = $this->userManager->findByEmail($email);
 			if($userWanted2 && $email === $userWanted2->getEmail()){
@@ -145,7 +153,7 @@ final class UserController extends CoreController
 			};
 		}
 
-		$username = (string)$_POST['username'];
+		$username = $this->escape($_POST['username']);
 		if($this->validator->checkInputText($username, "du nom d'utilisateur", 3, 20)){
 			$userWanted = $this->userManager->findByUsername($username);
 			if($userWanted && $username === $userWanted->getUsername()){
@@ -153,7 +161,7 @@ final class UserController extends CoreController
 			};
 		}
 
-		$password = (string)$_POST['password'];
+		$password = $this->escape($_POST['password']);
 		$this->validator->checkInputText($password, "du mot de passe", 4, 20);
 
 		if(empty($_SESSION['alert'])){
@@ -184,7 +192,7 @@ final class UserController extends CoreController
 	public function confirm($params = [])
 	{	
 		$userId = (int)$params['userId'];
-		$tokenCrypt = $params['token'];
+		$tokenCrypt = $this->escape($params['token']);
 		$user = $this->userManager->find($userId);
 		if($user !== false) {
 			$token = $user->getToken();
