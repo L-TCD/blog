@@ -58,19 +58,12 @@ final class UserController extends CoreController
 
 	public function update()
 	{
-		if(
-			isset($_POST['email']) &&
-			isset($_POST['username']) &&
-			isset($_POST['admin']) &&
-			isset($_POST['active']) &&
-			isset($_POST['id'])
-		) {
-			$email = $this->escape($_POST['email']);
-			$username = $this->escape($_POST['username']);
-			$admin = (bool)$_POST['admin'];
-			$active = (bool)$_POST['active'];
-			$id = (int)$_POST['id'];
-			
+		$email = filter_input(INPUT_POST, 'email');
+		$username = filter_input(INPUT_POST, 'username');
+		$admin = filter_input(INPUT_POST, 'admin', FILTER_VALIDATE_BOOL) ?? false;
+		$active = filter_input(INPUT_POST, 'active', FILTER_VALIDATE_BOOL) ?? false;
+		$id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
+
 			if($this->isAdmin()){
 				$this->userManager->update($email, $username, $admin, $active, $id);
 				Alert::addAlert(Alert::GREEN, "Modification de l'utilisateur effectuée.");
@@ -78,7 +71,7 @@ final class UserController extends CoreController
 			} else {
 				$this->redirect("main-home");
 			}
-		}
+
 	}
 
 	public function delete()
