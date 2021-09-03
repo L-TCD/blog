@@ -130,7 +130,10 @@ final class UserController extends CoreController
 			if($user === false) {
 				Alert::addAlert(Alert::RED, "Identifiant ou mot de passe incorrect.");
 				$this->redirect("log-in-form");
-			}elseif(password_verify($password, $user->getPassword())){
+			}elseif((password_verify($password, $user->getPassword())) && ($user->getActive() === false)){
+				Alert::addAlert(Alert::RED, "Validation de l'email absente, voir email automatique reçu lors de l'inscription");
+				$this->redirect("main-home");
+			}elseif((password_verify($password, $user->getPassword())) && ($user->getActive() === true)){
 				Session::put('auth', $user->getId());
 				Session::put('adminNav', $user->getAdmin());
 				Alert::addAlert(Alert::GREEN, "Bienvenue <strong>$username</strong> !");
@@ -172,7 +175,7 @@ final class UserController extends CoreController
 
 		$this->validator->checkInputText($password, "du mot de passe", 4, 20);
 
-		if(empty($_SESSION['alert'])){
+		if(!(Session::get('alert'))){
 			$token = (string)($username.time());
 			$tokenCrypt = crypt($token, 'rl');
 			
