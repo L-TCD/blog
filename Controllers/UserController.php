@@ -2,21 +2,28 @@
 
 namespace App\Controllers;
 
-use App\Models\UserManager;
-use App\Controllers\CoreController;
-use App\Utils\Alert;
-use App\Utils\Validator;
 use \DateTime;
-use App\Utils\Session;
+use App\Utils\SessionAlert;
+use App\Utils\Validator;
+use App\Utils\SessionAuth;
+use App\Models\UserManager;
+use App\Utils\SessionAdminNav;
+use App\Controllers\CoreController;
 
 final class UserController extends CoreController
 {
 	private $validator;
+	private $sessionAlert;
+	private $sessionAdminNav;
+	private $sessionAuth;
 
 	public function __construct()
 	{
 		$this->userManager = new UserManager();
 		$this->validator = new Validator;
+		$this->sessionAlert = new SessionAlert;
+		$this->sessionAdminNav = new SessionAdminNav;
+		$this->sessionAuth = new SessionAuth;
 	}
 
 	public function showAll()
@@ -73,10 +80,10 @@ final class UserController extends CoreController
 			$this->userManager->find($userId)
 		){
 			$this->userManager->update($email, $username, $admin, $active, $userId);
-			Alert::addAlert(Alert::GREEN, "Modification de l'utilisateur effectuée.");
+			$this->sessionAlert->addAlert(sessionAlert::GREEN, "Modification de l'utilisateur effectuée.");
 			$this->redirect("admin-users");
 		} else {
-			Alert::addAlert(Alert::RED, "Modification utilisateur abandonnée.");
+			$this->sessionAlert->addAlert(sessionAlert::RED, "Modification utilisateur abandonnée.");
 			$this->redirect("main-home");
 		}
 	}
@@ -90,10 +97,10 @@ final class UserController extends CoreController
 			$this->userManager->find($userId)
 		){
 			$this->userManager->delete($userId);
-			Alert::addAlert(Alert::GREEN, "Suppression de l'utilisateur effectuée.");
+			$this->sessionAlert->addAlert(sessionAlert::GREEN, "Suppression de l'utilisateur effectuée.");
 			$this->redirect("admin-users");
 		} else {
-			Alert::addAlert(Alert::RED, "Suppression utilisateur abandonnée.");
+			$this->sessionAlert->addAlert(sessionAlert::RED, "Suppression utilisateur abandonnée.");
 			$this->redirect("main-home");
 		}
 	}
@@ -128,18 +135,18 @@ final class UserController extends CoreController
 		if($username && $password){
 			$user = $this->userManager->findByUsername($username);
 			if($user === false) {
-				Alert::addAlert(Alert::RED, "Identifiant ou mot de passe incorrect.");
+				$this->sessionAlert->addAlert(sessionAlert::RED, "Identifiant ou mot de passe incorrect.");
 				$this->redirect("log-in-form");
 			}elseif((password_verify($password, $user->getPassword())) && ($user->getActive() === false)){
-				Alert::addAlert(Alert::RED, "Validation de l'email absente, voir email automatique reçu lors de l'inscription");
+				$this->sessionAlert->addAlert(sessionAlert::RED, "Validation de l'email absente, voir email automatique reçu lors de l'inscription");
 				$this->redirect("main-home");
 			}elseif((password_verify($password, $user->getPassword())) && ($user->getActive() === true)){
-				Session::put('auth', $user->getId());
-				Session::put('adminNav', $user->getAdmin());
-				Alert::addAlert(Alert::GREEN, "Bienvenue <strong>$username</strong> !");
+				$this->sessionAuth->put($user->getId());
+				$this->sessionAdminNav->put($user->getAdmin());
+				$this->sessionAlert->addAlert(sessionAlert::GREEN, "Bienvenue <strong>$username</strong> !");
 				$this->redirect("main-home");
 			}else {
-				Alert::addAlert(Alert::RED, "Identifiant ou mot de passe incorrect.");
+				$this->sessionAlert->addAlert(sessionAlert::RED, "Identifiant ou mot de passe incorrect.");
 				$this->redirect("log-in-form");
 			}
 		}
@@ -148,7 +155,8 @@ final class UserController extends CoreController
 	public function logOut()
 	{
 		if($this->isLogged()){
-			session_destroy();
+			$this->sessionAdminNav->forget();
+			$this->sessionAuth->forget();
 		}
 		$this->redirect("main-home");
 	}
@@ -162,20 +170,20 @@ final class UserController extends CoreController
 		if($this->validator->checkInputEmail($email)){
 			$userWanted2 = $this->userManager->findByEmail($email);
 			if($userWanted2 && $email === $userWanted2->getEmail()){
-				Alert::addAlert(Alert::RED, "Un compte existe déjà pour cet email.");
+				$this->sessionAlert->addAlert(sessionAlert::RED, "Un compte existe déjà pour cet email.");
 			};
 		}
 
 		if($this->validator->checkInputText($username, "du nom d'utilisateur", 3, 20)){
 			$userWanted = $this->userManager->findByUsername($username);
 			if($userWanted && $username === $userWanted->getUsername()){
-				Alert::addAlert(Alert::RED, "Nom d'utilisateur déjà pris.");
+				$this->sessionAlert->addAlert(sessionAlert::RED, "Nom d'utilisateur déjà pris.");
 			};
 		}
 
 		$this->validator->checkInputText($password, "du mot de passe", 4, 20);
 
-		if(!(Session::get('alert'))){
+		if(!($this->alert->get())){
 			$token = (string)($username.time());
 			$tokenCrypt = crypt($token, 'rl');
 			
@@ -190,9 +198,9 @@ final class UserController extends CoreController
 			$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 
 			if(mail($email, $subject, $message, $headers)){
-				Alert::addAlert(Alert::GREEN, 'Vous allez recevoir un email automatique avec un lien pour valider votre inscription (valable seulement 24h).');
+				$this->sessionAlert->addAlert(sessionAlert::GREEN, 'Vous allez recevoir un email automatique avec un lien pour valider votre inscription (valable seulement 24h).');
 			} else{
-				Alert::addAlert(Alert::RED, "Problème d'envoi d'email.");
+				$this->sessionAlert->addAlert(sessionAlert::RED, "Problème d'envoi d'email.");
 			}
 			$this->redirect('main-home');
 		} else {
@@ -213,22 +221,25 @@ final class UserController extends CoreController
 		}
 
 		if($user === false){
-			Alert::addAlert(Alert::RED, 'Utilisateur inconnu.');
+			$this->sessionAlert->addAlert(sessionAlert::RED, 'Utilisateur inconnu.');
 
 		} elseif($user->getActive() === true){
-			Alert::addAlert(Alert::RED, 'Compte utilisateur déjà validé');
+			$this->sessionAlert->addAlert(sessionAlert::RED, 'Compte utilisateur déjà validé');
 
 		} elseif($user->getActive() === false && $token == $tokenCrypt && $days >= 1){
 			$this->userManager->delete($userId);
-			Alert::addAlert(Alert::RED, "Le lien de validation n'est plus valide, il faut recommencer l'inscription");
+			$this->sessionAlert->addAlert(sessionAlert::RED, "Le lien de validation n'est plus valide, il faut recommencer l'inscription");
 
 		} elseif($token == $tokenCrypt && $days < 1){ 
 			$this->userManager->setActive(true, $userId);
-			Session::put('auth', $userId);
-			Alert::addAlert(Alert::GREEN, 'Validation compte utilisateur effectuée');
-			Alert::addAlert(Alert::GREEN, "Bienvenue <strong>".$user->getUsername()."</strong> !");
+
+			$sessionAuth = new SessionAuth;
+			$sessionAuth->put($user->getId());
+
+			$this->sessionAlert->addAlert(sessionAlert::GREEN, 'Validation compte utilisateur effectuée');
+			$this->sessionAlert->addAlert(sessionAlert::GREEN, "Bienvenue <strong>".$user->getUsername()."</strong> !");
 		} else {
-			Alert::addAlert(Alert::RED, 'Lien de validation incorrect');
+			$this->sessionAlert->addAlert(sessionAlert::RED, 'Lien de validation incorrect');
 		}
 		
 		$this->redirect("main-home");
