@@ -2,9 +2,10 @@
 
 namespace App\Controllers;
 
-use App\Utils\Alert;
+use App\Utils\SessionAuth;
 use App\Models\PostManager;
 use App\Models\UserManager;
+use App\Utils\SessionAlert;
 use App\Models\CommentManager;
 use App\Controllers\CoreController;
 
@@ -12,20 +13,28 @@ final class CommentController extends CoreController
 {
 	private $commentManager;
 	private $postManager;
+	private $sessionAlert;
+	private $sessionAuth;
 
 	public function __construct()
 	{
 		$this->commentManager = new CommentManager();
 		$this->postManager = new PostManager();
 		$this->userManager = new UserManager();	
+		$this->sessionAlert = new SessionAlert;
+		$this->sessionAuth = new SessionAuth;
 	}
 
 	public function insert()
 	{
+		$postId = filter_input(INPUT_POST, 'post_id', FILTER_VALIDATE_INT);
+		$content = filter_input(INPUT_POST, 'content', FILTER_SANITIZE_STRING);
+		$userId = filter_var($this->sessionAuth->getFirst(),FILTER_VALIDATE_INT);
+
 		if($this->isLogged()){
-			$this->commentManager->insert((string)$_POST['content'], (int)$_SESSION['auth'], (int)$_POST['post_id']);
-			Alert::addAlert(Alert::GREEN, 'Enregistrement du commentaire effectué. En attente de validation par un administrateur.');
-			$this->redirect("show-post", ["id" => $_POST['post_id']]);
+			$this->commentManager->insert($content, $userId, $postId);
+			$this->sessionAlert->addAlert(sessionAlert::GREEN, 'Enregistrement du commentaire effectué. En attente de validation par un administrateur.');
+			$this->redirect("show-post", ["id" => $postId]);
 		} else {
 			$this->redirect("main-home");
 		}
@@ -33,10 +42,12 @@ final class CommentController extends CoreController
 	
 	public function delete()
 	{
+		$commentId = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
+		$postId = filter_input(INPUT_POST, 'post_id', FILTER_VALIDATE_INT);
 		if($this->isAdmin()){
-			$this->commentManager->delete((int)$_POST['id']);
-			Alert::addAlert(Alert::GREEN, 'Suppression du commentaire effectuée.');
-			$this->redirect("show-post", ["id" => $_POST['post_id']]);
+			$this->commentManager->delete($commentId);
+			$this->sessionAlert->addAlert(sessionAlert::GREEN, 'Suppression du commentaire effectuée.');
+			$this->redirect("show-post", ["id" => $postId]);
 		} else {
 			$this->redirect("main-home");
 		}
@@ -44,9 +55,11 @@ final class CommentController extends CoreController
 	
 	public function hide()
 	{
+		$commentId = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
+		$postId = filter_input(INPUT_POST, 'post_id', FILTER_VALIDATE_INT);
 		if($this->isAdmin()){
-			$this->commentManager->hide((int)$_POST['id']);
-			$this->redirect("show-post", ["id" => $_POST['post_id']]);
+			$this->commentManager->hide($commentId);
+			$this->redirect("show-post", ["id" => $postId]);
 		} else {
 			$this->redirect("main-home");
 		}
@@ -54,9 +67,11 @@ final class CommentController extends CoreController
 	
 	public function show()
 	{
+		$commentId = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
+		$postId = filter_input(INPUT_POST, 'post_id', FILTER_VALIDATE_INT);
 		if($this->isAdmin()){
-			$this->commentManager->show((int)$_POST['id']);
-			$this->redirect("show-post", ["id" => $_POST['post_id']]);
+			$this->commentManager->show($commentId);
+			$this->redirect("show-post", ["id" => $postId]);
 		} else {
 			$this->redirect("main-home");
 		}
@@ -65,13 +80,13 @@ final class CommentController extends CoreController
 	public function updateForm()
 	{
 		if($this->isAdmin()){
-			$post_id = (int)$_POST['post_id'];
-			$commentToUpdateId = (int)$_POST['id'];
-			$post = $this->postManager->find($post_id);
-			$comments = $this->commentManager->findByPostId($post_id);
+			$postId = filter_input(INPUT_POST, 'post_id', FILTER_VALIDATE_INT);
+			$commentToUpdateId = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
+			$post = $this->postManager->find($postId);
+			$comments = $this->commentManager->findByPostId($postId);
 			$dataPage = [
-				"pageDescription" => "Page d'affichage de l'Article n°" . $post_id,
-				"pageTitle" => "Article " . $post_id,
+				"pageDescription" => "Page d'affichage de l'Article n°" . $postId,
+				"pageTitle" => "Article " . $postId,
 				"post" => $post,
 				"comments" => $comments,
 				"commentToUpdateId" => $commentToUpdateId,
@@ -87,10 +102,13 @@ final class CommentController extends CoreController
 
 	public function update()
 	{
+		$content = filter_input(INPUT_POST, 'content', FILTER_SANITIZE_STRING);
+		$commentId = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
+		$postId = filter_input(INPUT_POST, 'post_id', FILTER_VALIDATE_INT);
 		if($this->isAdmin()){
-			$this->commentManager->update((string)$_POST['content'], (int)$_POST['id']);
-			Alert::addAlert(Alert::GREEN, 'Modification du commentaire effectuée.');
-		    $this->redirect("show-post", ["id" => (int)$_POST['post_id']]);
+			$this->commentManager->update($content, $commentId);
+			$this->sessionAlert->addAlert(sessionAlert::GREEN, 'Modification du commentaire effectuée.');
+		    $this->redirect("show-post", ["id" => $postId]);
 		} else {
 			$this->redirect("main-home");
 		}
