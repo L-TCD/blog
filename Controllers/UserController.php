@@ -7,6 +7,7 @@ use App\Controllers\CoreController;
 use App\Utils\Alert;
 use App\Utils\Validator;
 use \DateTime;
+use App\Utils\Session;
 
 final class UserController extends CoreController
 {
@@ -58,34 +59,41 @@ final class UserController extends CoreController
 
 	public function update()
 	{
-
-		$email = filter_input(INPUT_POST, 'email');
-		$username = filter_input(INPUT_POST, 'username');
+		$email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
+		$username = filter_input(INPUT_POST, 'username',FILTER_SANITIZE_STRING);
 		$admin = filter_input(INPUT_POST, 'admin', FILTER_VALIDATE_BOOL) ?? false;
 		$active = filter_input(INPUT_POST, 'active', FILTER_VALIDATE_BOOL) ?? false;
-		$id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
+		$userId = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
 
-		$validator = new Validator;
-		// dd($validator->checkInputEmail($email));
-		// à compléter
-			if($validator->checkInputEmail($email) && $validator->checkInputText($username, 'text', 2, 10) && !empty($id) &&
-			$this->isAdmin()){
-				$this->userManager->update($email, $username, $admin, $active, $id);
-				Alert::addAlert(Alert::GREEN, "Modification de l'utilisateur effectuée.");
-				$this->redirect("admin-users");
-			} else {
-				$this->redirect("main-home");
-			}
-
+		if(
+			$this->isAdmin() &&
+			$this->validator->checkInputEmail($email) &&
+			$this->validator->checkInputText($username, "du nom d'utilisateur", 3, 20) &&
+			!empty($userId) && 
+			$this->userManager->find($userId)
+		){
+			$this->userManager->update($email, $username, $admin, $active, $userId);
+			Alert::addAlert(Alert::GREEN, "Modification de l'utilisateur effectuée.");
+			$this->redirect("admin-users");
+		} else {
+			Alert::addAlert(Alert::RED, "Modification utilisateur abandonnée.");
+			$this->redirect("main-home");
+		}
 	}
 
 	public function delete()
 	{
-		if($this->isAdmin()){
-			$this->userManager->delete((int)$_POST['id']);
+		$userId = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
+		if(
+			$this->isAdmin() &&
+			!empty($userId) && 
+			$this->userManager->find($userId)
+		){
+			$this->userManager->delete($userId);
 			Alert::addAlert(Alert::GREEN, "Suppression de l'utilisateur effectuée.");
 			$this->redirect("admin-users");
 		} else {
+			Alert::addAlert(Alert::RED, "Suppression utilisateur abandonnée.");
 			$this->redirect("main-home");
 		}
 	}
@@ -114,21 +122,22 @@ final class UserController extends CoreController
 
 	public function logIn()
 	{
-		if(!empty($_POST['username']) && !empty($_POST['password'])){
-			$user = $this->userManager->findByUsername($this->escape($_POST['username']));
+		$username = filter_input(INPUT_POST, 'username',FILTER_SANITIZE_STRING);
+		$password = filter_input(INPUT_POST, 'password',FILTER_SANITIZE_STRING);
+
+		if($username && $password){
+			$user = $this->userManager->findByUsername($username);
 			if($user === false) {
 				Alert::addAlert(Alert::RED, "Identifiant ou mot de passe incorrect.");
-				$this->redirect("log-in");
-
-			}elseif(password_verify($this->escape($_POST['password']),$user->getPassword())){
-				$_SESSION['auth'] = $user->getId();
-				$_SESSION['adminNav'] = $user->getAdmin();
-				Alert::addAlert(Alert::GREEN, "Connexion effectuée.");
+				$this->redirect("log-in-form");
+			}elseif(password_verify($password, $user->getPassword())){
+				Session::put('auth', $user->getId());
+				Session::put('adminNav', $user->getAdmin());
+				Alert::addAlert(Alert::GREEN, "Bienvenue <strong>$username</strong> !");
 				$this->redirect("main-home");
-
-			} else {
+			}else {
 				Alert::addAlert(Alert::RED, "Identifiant ou mot de passe incorrect.");
-				$this->redirect("log-in");
+				$this->redirect("log-in-form");
 			}
 		}
 	}
@@ -143,7 +152,10 @@ final class UserController extends CoreController
 
 	public function insert()
 	{	
-		$email = $this->escape($_POST['email']);
+		$email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
+		$username = filter_input(INPUT_POST, 'username',FILTER_SANITIZE_STRING);
+		$password = filter_input(INPUT_POST, 'password',FILTER_SANITIZE_STRING);
+
 		if($this->validator->checkInputEmail($email)){
 			$userWanted2 = $this->userManager->findByEmail($email);
 			if($userWanted2 && $email === $userWanted2->getEmail()){
@@ -151,7 +163,6 @@ final class UserController extends CoreController
 			};
 		}
 
-		$username = $this->escape($_POST['username']);
 		if($this->validator->checkInputText($username, "du nom d'utilisateur", 3, 20)){
 			$userWanted = $this->userManager->findByUsername($username);
 			if($userWanted && $username === $userWanted->getUsername()){
@@ -159,7 +170,6 @@ final class UserController extends CoreController
 			};
 		}
 
-		$password = $this->escape($_POST['password']);
 		$this->validator->checkInputText($password, "du mot de passe", 4, 20);
 
 		if(empty($_SESSION['alert'])){
@@ -189,8 +199,8 @@ final class UserController extends CoreController
 
 	public function confirm($params = [])
 	{	
-		$userId = (int)$params['userId'];
-		$tokenCrypt = $this->escape($params['token']);
+		$userId = filter_var ($params['userId'], FILTER_VALIDATE_INT);
+		$tokenCrypt = filter_var($params['token'], FILTER_SANITIZE_STRING);
 		$user = $this->userManager->find($userId);
 		if($user !== false) {
 			$token = $user->getToken();
@@ -211,13 +221,13 @@ final class UserController extends CoreController
 
 		} elseif($token == $tokenCrypt && $days < 1){ 
 			$this->userManager->setActive(true, $userId);
-			$_SESSION['auth'] = $userId;
+			Session::put('auth', $userId);
 			Alert::addAlert(Alert::GREEN, 'Validation compte utilisateur effectuée');
-
+			Alert::addAlert(Alert::GREEN, "Bienvenue <strong>".$user->getUsername()."</strong> !");
 		} else {
 			Alert::addAlert(Alert::RED, 'Lien de validation incorrect');
 		}
-
+		
 		$this->redirect("main-home");
 	}
 }
