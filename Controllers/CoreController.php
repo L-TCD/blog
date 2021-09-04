@@ -51,12 +51,4 @@ abstract class CoreController
 		];
 		$this->generatePage($dataPage);
 	}
-
-	// public function escape(string $data) : string
-	// {
-	// 	$data = trim($data);
-	// 	$data = stripslashes($data);
-	// 	$data = htmlspecialchars($data);
-	// 	return $data;
-	// }
 }

@@ -6,14 +6,14 @@ Developer : [Loïc](https://github.com/L-TCD)
 Supervisor/Teacher : [Charles](https://github.com/charlesen)
 
 ## SUMMARY
-- **[Technologies](#technologies)**
-  - [Server](#server)
-  - [Languages and libraries](#languages-and-libraries)
+-   **[Technologies](#technologies)**
+    -   [Server](#server)
+    -   [Languages and libraries](#languages-and-libraries)
 
-- **[Installation](#installation)**
-  - [Configure environment variables](#configure-environment-variables)
-  - [Create the database](#create-the-database)
-  - [Install Composer](#install-composer)
+-   **[Installation](#installation)**
+    -   [Configure environment variables](#configure-environment-variables)
+    -   [Create the database](#create-the-database)
+    -   [Install Composer](#install-composer)
 
 ---
 
