@@ -27,23 +27,23 @@
 	<div class="row g-3">
 		<div class="col-md-6">
 			<label for="firstName" class="form-label">Votre Prénom</label>
-			<input type="text" class="form-control" name="firstName" id="firstName" placeholder="" value="<?php if(!empty($firstName)){echo htmlentities($firstName);} ?>" required>
+			<input type="text" class="form-control" name="firstName" id="firstName" placeholder="" value="<?php if(!empty($firstName)){echo filter_var($firstName, FILTER_SANITIZE_STRING);} ?>" required>
 		</div>
 		<div class="col-md-6">
 			<label for="lastName" class="form-label">Votre Nom</label>
-			<input type="text" class="form-control" name="lastName" id="lastName" placeholder="" value="<?php if(!empty($lastName)){echo htmlentities($lastName);} ?>" required>
+			<input type="text" class="form-control" name="lastName" id="lastName" placeholder="" value="<?php if(!empty($lastName)){echo filter_var($lastName, FILTER_SANITIZE_STRING);} ?>" required>
 		</div>
 		<div class="col-12">
 			<label for="email" class="form-label">Votre Email</label>
-			<input type="email" class="form-control" name="email" id="email" placeholder="votre_email@exemple.com" value="<?php if(!empty($email)){echo htmlentities($email);} ?>" required>
+			<input type="email" class="form-control" name="email" id="email" placeholder="votre_email@exemple.com" value="<?php if(!empty($email)){echo filter_var($email, FILTER_SANITIZE_EMAIL);} ?>" required>
 		</div>
 		<div class="col-12">
 			<label for="object" class="form-label">Objet</label>
-			<input type="text" class="form-control" name="object" id="object" placeholder="" value="<?php if(!empty($object)){echo htmlentities($object);} ?>" required>
+			<input type="text" class="form-control" name="object" id="object" placeholder="" value="<?php if(!empty($object)){echo filter_var($object, FILTER_SANITIZE_STRING);} ?>" required>
 		</div>
 		<div class="col-12">
 			<label for="message" class="form-label">Message</label>
-			<textarea class="form-control" name="message" id="message" placeholder="" rows="3" required><?php if(!empty($message)){echo htmlentities($message);} ?></textarea>
+			<textarea class="form-control" name="message" id="message" placeholder="" rows="3" required><?php if(!empty($message)){echo filter_var($message, FILTER_SANITIZE_STRING);} ?></textarea>
 		</div>
 	</div>
 	<button class="w-100 btn btn-primary btn-lg my-4" type="submit">Envoyer</button>
