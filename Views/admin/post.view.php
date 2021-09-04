@@ -2,27 +2,27 @@
 
 <form action="/admin/articles/edition" method="POST">
 	<div class="row g-3">
-		<div class="text-muted">Publié le <?= $post->getCreatedAt()->format('d/m/Y') ?></div>
+		<div class="text-muted">Publié le <?= htmlentities($post->getCreatedAt()->format('d/m/Y')) ?></div>
 		<?php if($post->getUpdateAt() !== NULL) : ?>
-			<div class="text-muted">Dernière modification le <?= $post->getUpdateAt()->format('d/m/Y à H:i:s') ?></div>
+			<div class="text-muted">Dernière modification le <?= htmlentities($post->getUpdateAt()->format('d/m/Y à H:i:s')) ?></div>
 		<?php endif ?>
 		<div class="form-group">
 			<label for="title" class="form-label">Titre :</label>
-			<input type="text" class="form-control" id="title" name="title" value="<?= htmlentities($post->getTitle()) ?>">
+			<input type="text" class="form-control" id="title" name="title" value="<?= htmlentities($post->getTitle()) ?>" required>
 		</div>
 		<div class="form-group">
 			<label for="author" class="form-label">Auteur :</label>
-			<input type="text" class="form-control" id="author" name="author" value="<?= htmlentities($post->getAuthor()) ?>">
+			<input type="text" class="form-control" id="author" name="author" value="<?= htmlentities($post->getAuthor()) ?>" required>
 		</div>
 		<div class="form-group">
 			<label for="description" class="form-label">Chapô :</label>
-			<textarea name="description" id="description" class="form-control"><?= htmlentities($post->getDescription()) ?></textarea>
+			<textarea name="description" id="description" class="form-control" required><?= htmlentities($post->getDescription()) ?></textarea>
 		</div>
 		<div class="form-group">
 			<label for="content" class="form-label">Contenu :</label>
-			<textarea name="content" id="content" class="form-control" cols="auto" rows="10"><?= htmlentities($post->getContent()) ?></textarea>
+			<textarea name="content" id="content" class="form-control" cols="auto" rows="10" required><?= htmlentities($post->getContent()) ?></textarea>
 		</div>
-		<input type="hidden" name="id" value="<?= $post->getId() ?>">
+		<input type="hidden" name="id" value="<?= htmlentities($post->getId()) ?>">
 	</div>
 	<hr class="my-4">
 	<button type="submit" class="w-100 btn btn-warning btn-lg">Valider</button>
