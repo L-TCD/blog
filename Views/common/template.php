@@ -11,6 +11,7 @@
 	<!-- <link rel="stylesheet" href="https://bootswatch.com/5/sandstone/bootstrap.min.css"> -->
 	<link rel="stylesheet" href="./src/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+	<link rel="shortcut icon" href="./src/images/favicon.ico" type="image/x-icon">
 </head>
 <body>
     <?php require_once PATH_VIEW . "/common/menu.php"; ?>
