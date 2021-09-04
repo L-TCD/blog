@@ -14,20 +14,20 @@
 	</thead>
 	<tbody>
 		<?php foreach($posts as $post): ?>
-			<tr id="postId<?= $post->getId() ?>">
-				<td scope="row" class="align-middle"><a href="/admin/articles/<?= $post->getId() ?>"><?= $post->getId() ?></a></td>
+			<tr id="postId<?= htmlentities($post->getId()) ?>">
+				<td scope="row" class="align-middle"><a href="/admin/articles/<?= htmlentities($post->getId()) ?>"><?= htmlentities($post->getId()) ?></a></td>
 				<td class="align-middle">
-					<a href="/admin/articles/<?= $post->getId() ?>"><?= $post->getTitle() ?></a>
+					<a href="/admin/articles/<?= htmlentities($post->getId()) ?>"><?= htmlentities($post->getTitle()) ?></a>
 				</td>
 				<td>
 					<?php if($post->getCommentToValid() === true) : ?>
-						<form action="/articles/<?= $post->getId() ?>" method="POST" style="display:inline">
+						<form action="/articles/<?= htmlentities($post->getId()) ?>" method="POST" style="display:inline">
 							<button class="btn btn-info" type="submit">
 								Nouveau message
 							</button>
 						</form>
 					<?php else : ?>
-					<form action="/articles/<?= $post->getId() ?>" method="POST" style="display:inline">
+					<form action="/articles/<?= htmlentities($post->getId()) ?>" method="POST" style="display:inline">
 							<button class="btn btn-secondary" type="submit">
 								Afficher l'article
 							</button>
@@ -35,13 +35,13 @@
 					<?php endif ?>
 				</td>
 				<td class="align-middle">
-					<form action="/admin/articles/<?= $post->getId() ?>" method="POST" style="display:inline">
+					<form action="/admin/articles/<?= htmlentities($post->getId()) ?>" method="POST" style="display:inline">
 						<button class="btn btn-warning" type="submit">Modifier</button>
 					</form>
 				</td>
 				<td>
 					<form action="/admin/articles/suppression" method="POST" onSubmit="return confirm('Voulez-vous vraiment supprimer l\'article ?');" style="display:inline">
-						<input type="hidden" name="id" value="<?= $post->getId() ?>">
+						<input type="hidden" name="id" value="<?= htmlentities($post->getId()) ?>">
             			<button class="btn btn-danger" type="submit">Supprimer</button>
 					</form>
 				</td>

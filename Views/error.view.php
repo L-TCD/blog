@@ -1,1 +1,1 @@
-<?= $msg ?>
+<?= htmlentities($msg) ?>

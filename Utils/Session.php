@@ -2,18 +2,27 @@
 
 namespace App\Utils;
 
-class Session
+abstract class Session
 {
+	protected $key;
 
-    public static function put($key, $value){
-        $_SESSION[$key][] = $value;
+    public function put($value)
+	{
+        $_SESSION[$this->key][] = $value;
     }
 
-    public static function get($key){
-        return (isset($_SESSION[$key]) ? $_SESSION[$key] : null);
+    public function getFirst()
+	{
+        return (isset($_SESSION[$this->key]) ? $_SESSION[$this->key][0] : null);
     }
 
-    public static function forget($key){
-        unset($_SESSION[$key]);
+	public function getAll() : array
+	{
+        return (isset($_SESSION[$this->key]) ? $_SESSION[$this->key] : null);
+    }
+
+    public function forget()
+	{
+        unset($_SESSION[$this->key]);
     }
 }
