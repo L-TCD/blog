@@ -1,8 +1,8 @@
 <h1 class="text-center mt-3"><?= htmlentities($post->getTitle()) ?></h1>
 <hr>
-<p class="text-muted">Publié le <?= $post->getCreatedAt()->format('d/m/Y') ?> par <?= htmlentities($post->getAuthor()) ?>.
+<p class="text-muted">Publié le <?= htmlentities($post->getCreatedAt()->format('d/m/Y')) ?> par <?= htmlentities($post->getAuthor()) ?>.
 <?php if(!empty($post->getUpdateAt())) : ?>
-	(Dernière modification le <?= $post->getUpdateAt()->format('d/m/Y à H:i:s') ?>)</p>
+	(Dernière modification le <?= htmlentities($post->getUpdateAt()->format('d/m/Y à H:i:s')) ?>)</p>
 <?php endif ?>
 <p class="text-muted"><?= nl2br(htmlentities($post->getDescription())) ?></p><br>
 <p><?= nl2br(htmlentities($post->getContent())) ?></p>
@@ -17,26 +17,26 @@
 			<div class="text-muted mb-2">
 				Le <?= $comment->getCreatedAt()->format('d/m/Y à H:i:s') ?> par <?= htmlentities($comment->getUsername()) ?>
 				<form action="/comment/show" method="POST" style="display:inline">
-					<input type="hidden" name="post_id" value="<?= $post->getId() ?>">
-					<input type="hidden" name="id" value="<?= $comment->getId() ?>">
+					<input type="hidden" name="post_id" value="<?= htmlentities($post->getId()) ?>">
+					<input type="hidden" name="id" value="<?= htmlentities($comment->getId()) ?>">
 					<button class="btn btn-primary ms-1 <?= ($comment->getValid())?"disabled":"" ?>" type="submit">Afficher</button>
 				</form>
 
 				<form action="/comment/hide" method="POST" style="display:inline">
-					<input type="hidden" name="post_id" value="<?= $post->getId() ?>">
-					<input type="hidden" name="id" value="<?= $comment->getId() ?>">
+					<input type="hidden" name="post_id" value="<?= htmlentities($post->getId()) ?>">
+					<input type="hidden" name="id" value="<?= htmlentities($comment->getId()) ?>">
 					<button class="btn btn-secondary ms-1 <?= ($comment->getValid())?"":"disabled" ?>" type="submit">Masquer</button>
 				</form>
 
 				<form action="/comment/updateForm" method="POST" style="display:inline">
-					<input type="hidden" name="post_id" value="<?= $post->getId() ?>">
-					<input type="hidden" name="id" value="<?= $comment->getId() ?>">
+					<input type="hidden" name="post_id" value="<?= htmlentities($post->getId()) ?>">
+					<input type="hidden" name="id" value="<?= htmlentities($comment->getId()) ?>">
 					<button class="btn btn-warning ms-1" type="submit">Modifier</button>
 				</form>
 
 				<form action="/comment/delete" method="POST" onSubmit="return confirm('Voulez-vous vraiment supprimer le commentaire ?');" style="display:inline">
-					<input type="hidden" name="post_id" value="<?= $post->getId() ?>">
-					<input type="hidden" name="id" value="<?= $comment->getId() ?>">
+					<input type="hidden" name="post_id" value="<?= htmlentities($post->getId()) ?>">
+					<input type="hidden" name="id" value="<?= htmlentities($comment->getId()) ?>">
 					<button class="btn btn-danger ms-1">Supprimer</button>
 				</form>
 
@@ -55,8 +55,8 @@
 							<label for="content" class="form-label">Message à modifier:</label>
 							<textarea name="content" id="content" class="form-control" cols="auto" rows="auto"><?= nl2br(htmlentities($comment->getContent())) ?></textarea>
 						</div>
-						<input type="hidden" name="id" value="<?= $comment->getId() ?>">
-						<input type="hidden" name="post_id" value="<?= $post->getId() ?>">
+						<input type="hidden" name="id" value="<?= htmlentities($comment->getId()) ?>">
+						<input type="hidden" name="post_id" value="<?= htmlentities($post->getId()) ?>">
 						<button type="submit" class="btn btn-warning my-3">Enregistrer</button>
 					</form>
 				<?php else : ?>
@@ -68,7 +68,7 @@
 		<?php if($comment->getValid() === true) : ?>
 			<div class="mb-5">
 				<div class="text-muted mb-2">
-					Le <?= $comment->getCreatedAt()->format('d/m/Y à H:i:s') ?> par <?= htmlentities($comment->getUsername()) ?> :
+					Le <?= htmlentities($comment->getCreatedAt()->format('d/m/Y à H:i:s')) ?> par <?= htmlentities($comment->getUsername()) ?> :
 				</div>
 				<div class="mx-3">
 					<?= nl2br(htmlentities($comment->getContent())) ?></p>
@@ -87,7 +87,7 @@
 			<div class="form-group">
 				<textarea name="content" id="content" class="form-control" cols="auto" rows="2"></textarea>
 			</div>
-			<input type="hidden" name="post_id" value="<?= $post->getId() ?>">
+			<input type="hidden" name="post_id" value="<?= htmlentities($post->getId()) ?>">
 			<button type="submit" class="btn btn-success my-3">Envoyer</button>
 		</form>
 	</div>

@@ -5,10 +5,11 @@ namespace App\Controllers;
 abstract class CoreController
 {
 	protected $userManager;
+	protected $sessionAuth;
 
 	public function isLogged() : bool
 	{
-		if(!empty($_SESSION['auth'])){
+		if(!empty($this->sessionAuth->getFirst())){
 			return true;
 		}
 		return false;
@@ -17,7 +18,7 @@ abstract class CoreController
 	public function isAdmin() : bool
 	{
 		if($this->isLogged()){
-			$user = $this->userManager->find((int)$_SESSION['auth']);
+			$user = $this->userManager->find($this->sessionAuth->getFirst());
 			return $user->getAdmin();
 		}
 		return false;
@@ -51,11 +52,11 @@ abstract class CoreController
 		$this->generatePage($dataPage);
 	}
 
-	public function escape(string $data) : string
-	{
-		$data = trim($data);
-		$data = stripslashes($data);
-		$data = htmlspecialchars($data);
-		return $data;
-	}
+	// public function escape(string $data) : string
+	// {
+	// 	$data = trim($data);
+	// 	$data = stripslashes($data);
+	// 	$data = htmlspecialchars($data);
+	// 	return $data;
+	// }
 }

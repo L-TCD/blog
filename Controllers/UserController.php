@@ -15,7 +15,6 @@ final class UserController extends CoreController
 	private $validator;
 	private $sessionAlert;
 	private $sessionAdminNav;
-	private $sessionAuth;
 
 	public function __construct()
 	{

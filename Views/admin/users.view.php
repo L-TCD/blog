@@ -17,7 +17,7 @@
 				<tr>
 					<form action="/admin/utilisateurs/update" method="POST">
 						<td scope="row" class="align-middle">
-							<?= $user->getId() ?>
+							<?= htmlentities($user->getId()) ?>
 						</td>
 						<td>
 							<div class="form-group">
@@ -40,7 +40,7 @@
 							</div>
 						</td>
 						<td>
-							<input type="hidden" name="id" value="<?= $user->getId() ?>">
+							<input type="hidden" name="id" value="<?= htmlentities($user->getId()) ?>">
 							<button class="btn btn-success" type="submit">Valider</button>
 						</td>
 					</form>
@@ -52,9 +52,9 @@
 					
 				</tr>
 			<?php else : ?>
-			<tr id="userId<?= $user->getId() ?>">
+			<tr id="userId<?= htmlentities($user->getId()) ?>">
 				<td scope="row" class="align-middle">
-					<?= $user->getId() ?>
+					<?= htmlentities($user->getId()) ?>
 				</td>
 				<td class="align-middle">
 					<?= htmlentities($user->getUsername()) ?>
@@ -85,13 +85,13 @@
 					<?php endif ?>
 				</td>
 				<td class="align-middle">
-					<form action="/admin/utilisateurs/<?= (int)$user->getId() ?>" method="POST" style="display:inline">
+					<form action="/admin/utilisateurs/<?= htmlentities((int)$user->getId()) ?>" method="POST" style="display:inline">
 						<button class="btn btn-warning" type="submit">Modifier</button>
 					</form>
 				</td>
 				<td class="align-middle">
 					<form action="/admin/utilisateurs/delete" method="POST" onSubmit="return confirm('Voulez-vous vraiment supprimer l\'utilisateur ?');" style="display:inline">
-						<input type="hidden" name="id" value="<?= $user->getId() ?>">
+						<input type="hidden" name="id" value="<?= htmlentities($user->getId()) ?>">
             			<button class="btn btn-danger" type="submit">Supprimer</button>
 					</form>
 				</td>

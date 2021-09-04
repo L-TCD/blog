@@ -3,17 +3,18 @@
 namespace App\Controllers;
 
 use App\Controllers\CoreController;
-use App\Utils\Alert;
+use App\Utils\SessionAlert;
 use App\Utils\Validator;
 
 final class HomeController extends CoreController
 {
-
 	private $validator;
+	private $sessionAlert;
 
 	public function __construct()
 	{
 		$this->validator = new Validator;
+		$this->sessionAlert = new SessionAlert;
 	}
 	public function home()
 	{
@@ -31,11 +32,11 @@ final class HomeController extends CoreController
 		$configData = parse_ini_file(__DIR__ . '/../config.ini');
 		$to = $configData['CONTACT_EMAIL'];
 
-		$email = $this->escape($_POST['email']);
-		$object = $this->escape($_POST['object']);
-		$message = $this->escape($_POST['message']);
-		$firstName = $this->escape($_POST['firstName']);
-		$lastName = $this->escape($_POST['lastName']);
+		$email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
+		$object = filter_input(INPUT_POST, 'object',FILTER_SANITIZE_STRING);
+		$message = filter_input(INPUT_POST, 'message', FILTER_SANITIZE_STRING);
+		$firstName = filter_input(INPUT_POST, 'firstName', FILTER_SANITIZE_STRING);
+		$lastName = filter_input(INPUT_POST, 'lastName', FILTER_SANITIZE_STRING);
 
 		$headers = "MIME-Version: 1.0" . "\r\n";
 		$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
@@ -53,14 +54,14 @@ final class HomeController extends CoreController
 
 		if(empty($_SESSION['alert'])){
 			if(mail($to, $object, $emailContent, $headers)){
-				Alert::addAlert(Alert::GREEN, 'Message envoyé, merci.');
+				$this->sessionAlert->addAlert(sessionAlert::GREEN, 'Message envoyé, merci.');
 				$email = "";
 				$object = "";
 				$message = "";
 				$firstName = "";
 				$lastName = "";
 			} else{
-				Alert::addAlert(Alert::RED, "Problème avec l'envoi de l'email.");
+				$this->sessionAlert->addAlert(sessionAlert::RED, "Problème avec l'envoi de l'email.");
 			}
 		}
 

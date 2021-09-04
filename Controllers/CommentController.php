@@ -14,7 +14,6 @@ final class CommentController extends CoreController
 	private $commentManager;
 	private $postManager;
 	private $sessionAlert;
-	private $sessionAuth;
 
 	public function __construct()
 	{

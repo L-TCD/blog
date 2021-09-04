@@ -3,12 +3,12 @@
 namespace App\Controllers;
 
 use App\Utils\Validator;
+use App\Utils\SessionAuth;
 use App\Models\PostManager;
 use App\Models\UserManager;
 use App\Utils\SessionAlert;
 use App\Models\CommentManager;
 use App\Controllers\CoreController;
-
 
 final class PostController extends CoreController
 {
@@ -24,6 +24,7 @@ final class PostController extends CoreController
 		$this->userManager = new UserManager();
 		$this->validator = new Validator;
 		$this->sessionAlert = new SessionAlert;
+		$this->sessionAuth = new SessionAuth;
 	}
 
 	public function showAll()
