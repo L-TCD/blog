@@ -5,8 +5,6 @@ This blog in PHP without framework or CMS is one of the projects of the "Applica
 Developer : [Loïc](https://github.com/L-TCD)  
 Supervisor/Teacher : [Charles](https://github.com/charlesen)
 
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/7a303c5420dc40fe8b9c2064b4b11448)](https://www.codacy.com/gh/L-TCD/blog/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=L-TCD/blog&amp;utm_campaign=Badge_Grade)
-
 ## SUMMARY
 -   **[Technologies](#technologies)**
     -   [Server](#server)
