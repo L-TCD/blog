@@ -7,13 +7,13 @@ Supervisor/Teacher : [Charles](https://github.com/charlesen)
 
 ## SUMMARY
 __[Technologies](#technologies)__
-  * [Server](#server)
-  * [Languages and libraries](#languages-and-libraries)
-  
+* [Server](#server)
+* [Languages and libraries](#languages-and-libraries)
+
 __[Installation](#installation)__
-  * [Configure environment variables](#configure-environment-variables)
-  * [Create the database](#create-the-database)
-  * [Install Composer](#install-composer)  
+* [Configure environment variables](#configure-environment-variables)
+* [Create the database](#create-the-database)
+* [Install Composer](#install-composer)  
 ---
 
 ## TECHNOLOGIES
@@ -21,8 +21,8 @@ __[Installation](#installation)__
 ### __Server__
 You need a web server with PHP7 and MySQL.  
 Versions used in this project:
-  * PHP 7.4.21
-  * MySQL 8.0.21
+* PHP 7.4.21
+* MySQL 8.0.21
 
 You also need an access to a SMTP server.
 
@@ -31,14 +31,14 @@ This project is coded in __PHP7__, __HTML5__, __CSS3__ and __JS__.
 Dependencies manager: __Composer__  
 PHP packages, included via Composer:
 
-  * altorouter/altorouter ^2.0.1 ([more info](https://github.com/dannyvankooten/AltoRouter.git))
-  * fakerphp/faker ^1.15.0 ([more info](https://github.com/FakerPHP/Faker.git))
-  * symfony/var-dumper ^v5.3.6 ([more info](https://github.com/symfony/var-dumper.git))
-  * psr/container ^1.1.1 ([more info](https://github.com/php-fig/container.git))
+* altorouter/altorouter ^2.0.1 ([more info](https://github.com/dannyvankooten/AltoRouter.git))
+* fakerphp/faker ^1.15.0 ([more info](https://github.com/FakerPHP/Faker.git))
+* symfony/var-dumper ^v5.3.6 ([more info](https://github.com/symfony/var-dumper.git))
+* psr/container ^1.1.1 ([more info](https://github.com/php-fig/container.git))
 
 CSS/JS libraries, included via CDN links:
-  * Bootstrap ^5.0.2 ([more info](https://getbootstrap.com/docs/5.0/getting-started/introduction/))
-  * Bootstrap-icons ^1.5.0 ([more info](https://icons.getbootstrap.com/))
+* Bootstrap ^5.0.2 ([more info](https://getbootstrap.com/docs/5.0/getting-started/introduction/))
+* Bootstrap-icons ^1.5.0 ([more info](https://icons.getbootstrap.com/))
 
 ---
 
