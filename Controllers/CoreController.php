@@ -35,9 +35,9 @@ abstract class CoreController
 		extract($data);
 		ob_start();
 		$router = $GLOBALS['router'];
-		require_once($view);
+		require_once $view;
 		$pageContent = ob_get_clean();
-		require_once($template);
+		require_once $template;
 	}
 
 	public function pageError($msg)
@@ -51,12 +51,4 @@ abstract class CoreController
 		];
 		$this->generatePage($dataPage);
 	}
-
-	// public function escape(string $data) : string
-	// {
-	// 	$data = trim($data);
-	// 	$data = stripslashes($data);
-	// 	$data = htmlspecialchars($data);
-	// 	return $data;
-	// }
 }

@@ -17,16 +17,16 @@
 				<tr>
 					<form action="/admin/utilisateurs/update" method="POST">
 						<td scope="row" class="align-middle">
-							<?= htmlentities($user->getId()) ?>
+							<?= filter_var($user->getId(), FILTER_VALIDATE_INT) ?>
 						</td>
 						<td>
 							<div class="form-group">
-								<input type="text" class="form-control text-center" name="username" value="<?= htmlentities($user->getUsername()) ?>">
+								<input type="text" class="form-control text-center" name="username" value="<?= filter_var($user->getUsername(), FILTER_SANITIZE_STRING) ?>">
 							</div>
 						</td>
 						<td>
 							<div class="form-group">
-								<input type="email" class="form-control text-center" name="email" value="<?= htmlentities($user->getEmail()) ?>">
+								<input type="email" class="form-control text-center" name="email" value="<?= filter_var($user->getEmail(), FILTER_SANITIZE_EMAIL) ?>">
 							</div>
 						</td>
 						<td>
@@ -40,7 +40,7 @@
 							</div>
 						</td>
 						<td>
-							<input type="hidden" name="id" value="<?= htmlentities($user->getId()) ?>">
+							<input type="hidden" name="id" value="<?= filter_var($user->getId(), FILTER_VALIDATE_INT) ?>">
 							<button class="btn btn-success" type="submit">Valider</button>
 						</td>
 					</form>
@@ -52,15 +52,15 @@
 					
 				</tr>
 			<?php else : ?>
-			<tr id="userId<?= htmlentities($user->getId()) ?>">
+			<tr id="userId<?= filter_var($user->getId(), FILTER_VALIDATE_INT) ?>">
 				<td scope="row" class="align-middle">
-					<?= htmlentities($user->getId()) ?>
+					<?= filter_var($user->getId(), FILTER_VALIDATE_INT) ?>
 				</td>
 				<td class="align-middle">
-					<?= htmlentities($user->getUsername()) ?>
+					<?= filter_var($user->getUsername(), FILTER_SANITIZE_STRING) ?>
 				</td>
 				<td class="align-middle">
-					<?= htmlentities($user->getEmail()) ?>
+					<?= filter_var($user->getEmail(), FILTER_SANITIZE_EMAIL) ?>
 				</td>
 				<td class="align-middle">					
 					<?php if($user->getAdmin()) : ?>
@@ -85,13 +85,13 @@
 					<?php endif ?>
 				</td>
 				<td class="align-middle">
-					<form action="/admin/utilisateurs/<?= htmlentities((int)$user->getId()) ?>" method="POST" style="display:inline">
+					<form action="/admin/utilisateurs/<?= filter_var((int)$user->getId(), FILTER_VALIDATE_INT) ?>" method="POST" style="display:inline">
 						<button class="btn btn-warning" type="submit">Modifier</button>
 					</form>
 				</td>
 				<td class="align-middle">
 					<form action="/admin/utilisateurs/delete" method="POST" onSubmit="return confirm('Voulez-vous vraiment supprimer l\'utilisateur ?');" style="display:inline">
-						<input type="hidden" name="id" value="<?= htmlentities($user->getId()) ?>">
+						<input type="hidden" name="id" value="<?= filter_var($user->getId(), FILTER_VALIDATE_INT) ?>">
             			<button class="btn btn-danger" type="submit">Supprimer</button>
 					</form>
 				</td>
