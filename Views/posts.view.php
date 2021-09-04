@@ -5,10 +5,10 @@
 	<div class="col">
 		<div class="card text-center h-100">
 			<div class="card-body">
-				<h5 class="card-title"><?= htmlentities($post->getTitle()) ?></h5>
-				<p class="text-muted">Publié le <?= htmlentities($post->getCreatedAt()->format('d/m/Y')) ?><br>par <?= htmlentities($post->getAuthor()) ?></p>
-				<p><?= nl2br(htmlentities($post->getDescription())) ?></p>
-				<p><a href="<?= $router->generate("show-post", ["id" => htmlentities($post->getId())]) ?>" class="btn btn-primary">Voir l'article</a></p>
+				<h5 class="card-title"><?= filter_var($post->getTitle(), FILTER_SANITIZE_STRING) ?></h5>
+				<p class="text-muted">Publié le <?= filter_var($post->getCreatedAt()->format('d/m/Y'), FILTER_SANITIZE_STRING) ?><br>par <?= filter_var($post->getAuthor(), FILTER_SANITIZE_STRING) ?></p>
+				<p><?= nl2br(filter_var($post->getDescription(), FILTER_SANITIZE_STRING)) ?></p>
+				<p><a href="<?= $router->generate("show-post", ["id" => filter_var($post->getId(), FILTER_VALIDATE_INT)]) ?>" class="btn btn-primary">Voir l'article</a></p>
 			</div>
 		</div>
 	</div>
