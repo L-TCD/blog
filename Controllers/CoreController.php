@@ -35,9 +35,9 @@ abstract class CoreController
 		extract($data);
 		ob_start();
 		$router = $GLOBALS['router'];
-		require_once($view);
+		require_once $view;
 		$pageContent = ob_get_clean();
-		require_once($template);
+		require_once $template;
 	}
 
 	public function pageError($msg)

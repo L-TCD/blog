@@ -10,7 +10,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 </head>
 <body>
-    <?php require_once(PATH_VIEW . "/common/menu.php"); ?>
+    <?php require_once PATH_VIEW . "/common/menu.php"; ?>
 
 	<?php
 		if(!empty($_SESSION['alert'])) :

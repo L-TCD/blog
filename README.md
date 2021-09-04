@@ -46,9 +46,9 @@ CSS/JS libraries, included via CDN links:
 ## INSTALLATION
 
 ### **Configure environment variables**
-1.  Open the ___config.ini.example file
+1.  Open the *config.ini.example* file
 2.  Replace the example values with your own values
-3.  Rename the file ___config.ini___
+3.  Rename the file *config.ini*
 
 ### **Create the database**
 1.  Create a new MySQL Database with the same name as in the config.ini file
