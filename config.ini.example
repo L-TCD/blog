@@ -10,3 +10,6 @@ DB_PASSWORD=examplePassword
 
 ; contact form email :
 CONTACT_EMAIL=example@exemple.com
+
+; url
+WEBSITE_URL=http://localhost:8000

@@ -162,9 +162,13 @@ final class UserController extends CoreController
 
 	public function insert()
 	{	
+		$configData = parse_ini_file(__DIR__ . '/../config.ini');
+		$url = $configData['WEBSITE_URL'];
+
 		$email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
 		$username = filter_input(INPUT_POST, 'username',FILTER_SANITIZE_STRING);
 		$password = filter_input(INPUT_POST, 'password',FILTER_SANITIZE_STRING);
+		$passwordCrypt = password_hash($password, PASSWORD_BCRYPT);
 
 		if($this->validator->checkInputEmail($email)){
 			$userWanted2 = $this->userManager->findByEmail($email);
@@ -182,15 +186,15 @@ final class UserController extends CoreController
 
 		$this->validator->checkInputText($password, "du mot de passe", 4, 20);
 
-		if(!($this->alert->get())){
+		if(!($this->sessionAlert->getAll())){
 			$token = (string)($username.time());
 			$tokenCrypt = crypt($token, 'rl');
 			
-			$userId = $this->userManager->insert($email, $username, $password, $tokenCrypt);
+			$userId = $this->userManager->insert($email, $username, $passwordCrypt, $tokenCrypt);
 			$subject = 'Lien de validation';
 
 			$message = '<h1>Bienvenue !</h1>';
-			$message .= '<p>Pour valider votre inscription sur le blog, <a href="http://localhost:8000/confirm/'.$userId.'/'.$tokenCrypt.'">Cliquez ici</a>.</p>';
+			$message .= '<p>Pour valider votre inscription sur le blog, <a href='.$url.'/'.'confirm/'.$userId.'/'.$tokenCrypt.'>Cliquez ici</a>.</p>';
 			$message .= '<p> A très vite !</p><br>';
 
 			$headers = "MIME-Version: 1.0" . "\r\n";

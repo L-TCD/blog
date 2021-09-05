@@ -16,7 +16,7 @@ abstract class Session
         return (isset($_SESSION[$this->key]) ? $_SESSION[$this->key][0] : null);
     }
 
-	public function getAll() : array
+	public function getAll() : ?array
 	{
         return (isset($_SESSION[$this->key]) ? $_SESSION[$this->key] : null);
     }
