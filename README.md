@@ -2,6 +2,8 @@
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/6ea5239ec8b24571952db428311e5079)](https://app.codacy.com/gh/L-TCD/blog?utm_source=github.com&utm_medium=referral&utm_content=L-TCD/blog&utm_campaign=Badge_Grade_Settings)
 
+[Online example](https://blog.coissard.dev)  
+
 This blog in PHP without framework or CMS is one of the projects of the "Application Developer - PHP / Symfony" training course on OpenClassrooms.
 
 Developer : [Loïc](https://github.com/L-TCD)  
