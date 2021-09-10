@@ -16,8 +16,8 @@ Supervisor/Teacher : [Charles](https://github.com/charlesen)
 
 -   **[Installation](#installation)**
     -   [Configure environment variables](#configure-environment-variables)
+	-   [Install Composer](#install-composer)
     -   [Create the database](#create-the-database)
-    -   [Install Composer](#install-composer)
 
 ---
 
@@ -53,6 +53,18 @@ CSS/JS libraries, included via CDN links:
 1.  Open the *config.ini.example* file
 2.  Replace the example values with your own values
 3.  Rename the file *config.ini*
+
+### **Install Composer**
+1.  Install **Composer** by following ([the official instructions](https://getcomposer.org/download/)).
+2.  Go to the project directory in your cmd:
+```shell
+$ cd some\directory
+```
+3.  Install dependencies with the following command:
+```shell
+$ composer install
+```
+Dependencies should be installed in your project (check _vendor_ directory).
 
 ### **Create the database**
 1.  Create a new MySQL Database with the same name as in the config.ini file
@@ -99,17 +111,6 @@ $ php commands/fill.php
 ```
 This command create an account admin (username:"admin", password:"admin") and 9 account visitor with (password:"visitor").
 
-### **Install Composer**
-1.  Install **Composer** by following ([the official instructions](https://getcomposer.org/download/)).
-2.  Go to the project directory in your cmd:
-```shell
-$ cd some\directory
-```
-3.  Install dependencies with the following command:
-```shell
-$ composer install
-```
-Dependencies should be installed in your project (check _vendor_ directory).
 ### **Start the server and open public/index.php**
 1.  You can start the web server
 ```shell

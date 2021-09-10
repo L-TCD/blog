@@ -2,9 +2,16 @@
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 $faker = Faker\Factory::create('fr_FR');
 
-$pdo = new PDO("mysql:host=localhost;dbname=blog;charset=utf8","root","root", [
-	PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-]);
+$configData = parse_ini_file(__DIR__ . '/../config.ini');
+
+$pdo = new PDO(
+	"mysql:host={$configData['DB_HOST']};dbname={$configData['DB_NAME']};charset=utf8",
+	$configData['DB_USERNAME'],
+	$configData['DB_PASSWORD'],
+	[
+		PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+	]
+);
 
 $pdo->exec('TRUNCATE TABLE user');
 $pdo->exec('TRUNCATE TABLE post');
