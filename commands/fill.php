@@ -13,9 +13,9 @@ $pdo = new PDO(
 	]
 );
 
-$pdo->exec('TRUNCATE TABLE user');
-$pdo->exec('TRUNCATE TABLE post');
-$pdo->exec('TRUNCATE TABLE comment');
+// $pdo->exec('TRUNCATE TABLE user');
+// $pdo->exec('TRUNCATE TABLE post');
+// $pdo->exec('TRUNCATE TABLE comment');
 
 $usersId = [];
 $postsId = [];

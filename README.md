@@ -50,7 +50,7 @@ CSS/JS libraries, included via CDN links:
 ## INSTALLATION
 
 ### **Configure environment variables**
-1.  Open the *config.ini.example* file
+1.  Open the *config.ini.example* file at the project's root folder
 2.  Replace the example values with your own values
 3.  Rename the file *config.ini*
 
@@ -67,8 +67,9 @@ $ composer install
 Dependencies should be installed in your project (check _vendor_ directory).
 
 ### **Create the database**
-1.  Create a new MySQL Database with the same name as in the config.ini file
-2.  Create new tables :
+1.  Starting the SQL Server
+2.  Create a new MySQL Database with the same name as in the config.ini file
+3.  Create new tables :
 ```sql
 CREATE TABLE `user` (
   `id` INT NOT NULL AUTO_INCREMENT,
