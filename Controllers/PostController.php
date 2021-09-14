@@ -27,7 +27,10 @@ final class PostController extends CoreController
 		$this->sessionAuth = new SessionAuth;
 	}
 
-	public function showAll()
+	/**
+	 * show all posts
+	 */
+	public function showAll(): void
 	{
 		$posts = $this->postManager->findAll("id DESC");
 		$dataPage = [
@@ -40,7 +43,12 @@ final class PostController extends CoreController
 		$this->generatePage($dataPage);
 	}
 
-	public function show($params = [])
+	/**
+	 * show a post
+	 * 
+	 * @param array $params
+	 */
+	public function show($params = []): void
 	{
 		$post = $this->postManager->find($params['id']);
 		$comments = $this->commentManager->findByPostId($params['id']);
@@ -59,7 +67,10 @@ final class PostController extends CoreController
 		$this->generatePage($dataPage);
 	}
 
-	public function adminShowAll()
+	/**
+	 * show all posts for administrators
+	 */
+	public function adminShowAll(): void
 	{
 		if($this->isAdmin()){
 			$posts = $this->postManager->findAll("id DESC");
@@ -87,7 +98,12 @@ final class PostController extends CoreController
 		}
 	}
 
-	public function updateForm($params = [])
+	/**
+	 * show the post update form
+	 * 
+	 * @param array $params
+	 */
+	public function updateForm($params = []): void
 	{
 		if($this->isAdmin()){
 			$post = $this->postManager->find($params['id']);
@@ -106,7 +122,10 @@ final class PostController extends CoreController
 		}
 	}
 
-	public function update()
+	/**
+	 * update a post
+	 */
+	public function update(): void
 	{
 		$title = filter_input(INPUT_POST, 'title',FILTER_SANITIZE_STRING);
 		$content = filter_input(INPUT_POST, 'content',FILTER_SANITIZE_STRING);
@@ -129,7 +148,10 @@ final class PostController extends CoreController
 		}
 	}
 
-	public function delete()
+	/**
+	 * delete a post
+	 */
+	public function delete(): void
 	{
 		$postId = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
 		if(
@@ -145,7 +167,10 @@ final class PostController extends CoreController
 		}
 	}
 
-	public function insertForm()
+	/**
+	 * show the new post form
+	 */
+	public function insertForm(): void
 	{
 		if($this->isAdmin()){
 			$dataPage = [
@@ -161,7 +186,10 @@ final class PostController extends CoreController
 		}
 	}
 
-	public function insert()
+	/**
+	 * add a new post
+	 */
+	public function insert(): void
 	{
 		$title = filter_input(INPUT_POST, 'title',FILTER_SANITIZE_STRING);
 		$content = filter_input(INPUT_POST, 'content',FILTER_SANITIZE_STRING);

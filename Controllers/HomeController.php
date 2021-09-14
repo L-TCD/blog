@@ -16,7 +16,11 @@ final class HomeController extends CoreController
 		$this->validator = new Validator;
 		$this->sessionAlert = new SessionAlert;
 	}
-	public function home()
+
+	/**
+	 * show the homepage
+	 */
+	public function home(): void
 	{
 		$dataPage = [
 			"pageDescription" => "Page d'accueil du blog !",
@@ -27,7 +31,10 @@ final class HomeController extends CoreController
 		$this->generatePage($dataPage);
 	}
 
-	public function contact()
+	/**
+	 * send a message to the blog owner
+	 */
+	public function contact(): void
 	{	
 		$configData = parse_ini_file(__DIR__ . '/../config.ini');
 		$to = $configData['CONTACT_EMAIL'];

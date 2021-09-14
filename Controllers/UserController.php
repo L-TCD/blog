@@ -25,7 +25,10 @@ final class UserController extends CoreController
 		$this->sessionAuth = new SessionAuth;
 	}
 
-	public function showAll()
+	/**
+	 * show all users for administrator
+	 */
+	public function showAll(): void
 	{
 		if($this->isAdmin()){
 			$users = $this->userManager->findAll("");
@@ -44,7 +47,12 @@ final class UserController extends CoreController
 
 	}
 
-	public function adminUpdateForm($params = [])
+	/**
+	 * show the user update form
+	 * 
+	 * @param array $params
+	 */
+	public function adminUpdateForm($params = []): void
 	{
 		if($this->isAdmin()){
 			$userToUpdateId = (int)$params['id'];
@@ -63,7 +71,10 @@ final class UserController extends CoreController
 		}
 	}
 
-	public function update()
+	/**
+	 * update the user 
+	 */
+	public function update(): void
 	{
 		$email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
 		$username = filter_input(INPUT_POST, 'username',FILTER_SANITIZE_STRING);
@@ -87,7 +98,10 @@ final class UserController extends CoreController
 		}
 	}
 
-	public function delete()
+	/**
+	 * delete the user
+	 */
+	public function delete(): void
 	{
 		$userId = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
 		if(
@@ -104,7 +118,10 @@ final class UserController extends CoreController
 		}
 	}
 
-	public function insertForm()
+	/**
+	 * show the registration page
+	 */
+	public function insertForm(): void
 	{
 		$dataPage = [
 			"pageDescription" => "Page d'inscription",
@@ -115,7 +132,10 @@ final class UserController extends CoreController
 		$this->generatePage($dataPage);
 	}
 
-	public function logInForm()
+	/**
+	 * show the loggin page
+	 */
+	public function logInForm(): void
 	{
 		$dataPage = [
 			"pageDescription" => "Page de connexion",
@@ -126,7 +146,10 @@ final class UserController extends CoreController
 		$this->generatePage($dataPage);
 	}
 
-	public function logIn()
+	/**
+	 * log user in
+	 */
+	public function logIn(): void
 	{
 		$username = filter_input(INPUT_POST, 'username',FILTER_SANITIZE_STRING);
 		$password = filter_input(INPUT_POST, 'password',FILTER_SANITIZE_STRING);
@@ -151,7 +174,10 @@ final class UserController extends CoreController
 		}
 	}
 
-	public function logOut()
+	/**
+	 * log user out
+	 */
+	public function logOut(): void
 	{
 		if($this->isLogged()){
 			$this->sessionAdminNav->forget();
@@ -160,7 +186,10 @@ final class UserController extends CoreController
 		$this->redirect("main-home");
 	}
 
-	public function insert()
+	/**
+	 * add a new user
+	 */
+	public function insert(): void
 	{	
 		$configData = parse_ini_file(__DIR__ . '/../config.ini');
 		$url = $configData['WEBSITE_URL'];
@@ -211,7 +240,12 @@ final class UserController extends CoreController
 		}
 	}
 
-	public function confirm($params = [])
+	/**
+	 * confirm the user email and valid the registration
+	 * 
+	 * @param array $params
+	 */
+	public function confirm($params = []): void
 	{	
 		$userId = filter_var ($params['userId'], FILTER_VALIDATE_INT);
 		$tokenCrypt = filter_var($params['token'], FILTER_SANITIZE_STRING);

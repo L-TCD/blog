@@ -15,7 +15,7 @@ final class CommentController extends CoreController
 	private $postManager;
 	private $sessionAlert;
 
-	public function __construct()
+	public function __construct() 
 	{
 		$this->commentManager = new CommentManager();
 		$this->postManager = new PostManager();
@@ -24,7 +24,10 @@ final class CommentController extends CoreController
 		$this->sessionAuth = new SessionAuth;
 	}
 
-	public function insert()
+	/**
+	 *  insert a new comment
+	 */
+	public function insert(): void
 	{
 		$postId = filter_input(INPUT_POST, 'post_id', FILTER_VALIDATE_INT);
 		$content = filter_input(INPUT_POST, 'content', FILTER_SANITIZE_STRING);
@@ -39,7 +42,10 @@ final class CommentController extends CoreController
 		}
 	}
 	
-	public function delete()
+	/**
+	 * delete a comment
+	 */
+	public function delete(): void
 	{
 		$commentId = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
 		$postId = filter_input(INPUT_POST, 'post_id', FILTER_VALIDATE_INT);
@@ -52,7 +58,10 @@ final class CommentController extends CoreController
 		}
 	}
 	
-	public function hide()
+	/**
+	 * hide the comment from all who are not administrators
+	 */
+	public function hide(): void
 	{
 		$commentId = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
 		$postId = filter_input(INPUT_POST, 'post_id', FILTER_VALIDATE_INT);
@@ -64,7 +73,10 @@ final class CommentController extends CoreController
 		}
 	}
 	
-	public function show()
+	/**
+	 * show the comment for everyone
+	 */
+	public function show(): void
 	{
 		$commentId = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
 		$postId = filter_input(INPUT_POST, 'post_id', FILTER_VALIDATE_INT);
@@ -75,8 +87,11 @@ final class CommentController extends CoreController
 			$this->redirect("main-home");
 		}
 	}
-	
-	public function updateForm()
+
+	/**
+	 * show the comment update form
+	 */	
+	public function updateForm(): void
 	{
 		if($this->isAdmin()){
 			$postId = filter_input(INPUT_POST, 'post_id', FILTER_VALIDATE_INT);
@@ -99,7 +114,10 @@ final class CommentController extends CoreController
 		}
 	}
 
-	public function update()
+	/**
+	 * update the comment
+	 */
+	public function update(): void
 	{
 		$content = filter_input(INPUT_POST, 'content', FILTER_SANITIZE_STRING);
 		$commentId = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
